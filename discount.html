@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  
+
+</style>
+<body>
+    <script>
+       
+let totalAmount = 3500; 
+
+let finalAmount;
+let discount;
+
+if (totalAmount > 3000) {
+    
+    discount = totalAmount * 0.15; 
+    finalAmount = totalAmount - discount;
+    console.log("Congratulations.... You got a 15% discount.");
+    console.log("Discount Amount: " + discount);
+}
+
+else {
+    
+    discount = 0;
+    finalAmount = totalAmount;
+    console.log("No discount applied for amounts 3000 or below.");
+}
+console.log("Original Price: " + totalAmount);
+console.log("Final Amount to Pay: " + finalAmount);
+    </script>
+    
+</body>
+</html>

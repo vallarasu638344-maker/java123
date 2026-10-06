@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      margin: 20px auto;
+      border: 1px solid grey;
+    }
+    .main {
+      width: 800px;
+      max-height: 900px;
+      border: 1px solid grey;
+       margin: 20px auto;
+    }
+    header {
+      background-color: #3333cc;
+      color: white;
+      font-size: 25px;
+      font-weight: 800;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 2px solid #666;
+    }
+    article {
+      padding: 30px 3px;
+    }
+    p {
+      font-size: 17px;
+      font-weight: 600;
+      margin: auto;
+      font-style: italic;
+      line-height: 1.6;
+    }
+    h2 {
+      background-color: #666;
+      padding: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th {
+      background-color: #aaa;
+      padding: 15px;
+      border: 1px solid black;
+    }
+    td {
+      padding: 15px;
+      border: 2px solid #a2a0a0;
+    }
+    .empty {
+      height: 30px;
+      background-color: aliceblue;
+    }
+    footer {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      background-color: #7da8e8;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      width: 750px;
+      max-height: 600px;
+      margin: auto;
+      border: 1px solid gray;
+    }
+    @media screen and (max-width: 768px){
+            .main{
+                 width: 100%;
+                 margin: 0; 
+                }
+            header { 
+                font-size: 22px; 
+            }
+            .container {
+                width: auto;
+            }
+            article p{ 
+                font-size: 13px; 
+                line-height: 20px;
+             }
+            table th, table td{ 
+                padding: 8px 3px;
+                 font-size: 11px; 
+                }
+        }
+        @media screen and (max-width: 480px){
+            header {
+                 font-size: 18px;
+                }
+            .container {
+                width: auto;
+            }
+            article p{ 
+                font-size: 11px; 
+            }
+            footer{ 
+                font-size: 12px;
+             }
+        }
+    
+
+  
+  </style>
+  <body>
+    <div class="main">
+      <header>Welcome to VTNF</header>
+      <div class="container">
+        <article>
+          <p>
+            It is a long established fact that a reader will be distracted by
+            the readable content of a page when looking at its layout. The point
+            of using Lorem Ipsum is that it has a more-or-less normal
+            distribution of letters, as opposed to using 'Content here, content
+            here', making it look like readable English. Many desktop publishing
+            packages and web page editors now use Lorem Ipsum as their default
+            model text, and a search for 'lorem ipsum' will uncover many web
+            sites still in their infancy. Various versions have evolved over the
+            years, sometimes by accident, sometimes on purpose (injected humour
+            and the like).
+          </p>
+        </article>
+
+        <table>
+          <h2>Student Mark List</h2>
+          <tr>
+            <th>S.No</th>
+            <th>Names</th>
+            <th>Tamil</th>
+            <th>English</th>
+            <th>Maths</th>
+            <th>Science</th>
+            <th>Social Science</th>
+          </tr>
+          <tr>
+            <th>1</th>
+            <th>Jegan</th>
+            <th>90</th>
+            <th>78</th>
+            <th>35</th>
+            <th>80</th>
+            <th>90</th>
+          </tr>
+          <tr>
+            <th>2</th>
+            <th>Nathiya</th>
+            <th>50</th>
+            <th>45</th>
+            <th>30</th>
+            <th>80</th>
+            <th>100</th>
+          </tr>
+          <tr>
+            <th>3</th>
+            <th>Annapoorani</th>
+            <th>40</th>
+            <th>50</th>
+            <th>60</th>
+            <th>90</th>
+            <th>80</th>
+          </tr>
+        </table>
+        <div class="empty"></div>
+      </div>
+      <footer>copyright @ 2026 Vtnf.com</footer>
+    </div>
+  </body>
+</html>

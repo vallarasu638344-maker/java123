@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+       
+<style>
+         #{
+            margin: 0;
+            width: 0;
+            box-sizing: border-box;
+
+         }
+         body{
+            background-color: rgb(251, 252, 249);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+          
+         }
+         .container{
+            background-color: rgb(242, 240, 247);
+            border-radius: 5px;
+            max-width: 100%;
+            overflow: hidden;
+            box-shadow: 10px 20px 25px blueviolet;
+         }
+         .header{
+            border-bottom: 1px solid white;
+            padding: 20px 50px;
+            background-color: rgb(243, 245, 245);
+
+         }
+         .header h1{ 
+         margin: 0;
+        text-align: center;
+    } 
+    .form{
+        padding: 30px 40px;
+    }
+    .form_control{
+        margin: 10px;
+        padding-bottom: 10px;
+        position: relative;
+    }
+    .form_control label{|
+    display: inline;
+    margin-bottom: 5px;
+}
+ .form button{
+    background-color: blue;
+    border: none;
+    padding: 5px;
+    color: azure;
+    display: block;
+    font-size: 18px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 50px; 
+    
+} 
+
+</style>
+<body>
+    <div class="container">
+      
+        <div class="header">
+            <h1>creat account</h1>
+        </div>
+        <form class="form" id="form">
+       <div class="form-control">
+       <label for="">username</label>
+       <input type="text" placeholder="username" id="username"> </i><br>
+      
+       <label for="">email</label>
+       <input type="email" placeholder="@ffmail" id="email""><br>
+       <label for="">password</label>
+       <input type="password" placeholder="password123" id="password">
+               
+            </div>
+             <button>submit</button>
+       
+        </form>
+         <div id="button">
+            <button id="closebtn">close</button>
+        </div>  
+    </div>
+  
+</body>
+</html>

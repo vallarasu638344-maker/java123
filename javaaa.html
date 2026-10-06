@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Card Layout</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .con {
+            width: 1200px;
+            margin: auto;
+            background-color:gold;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: pink;
+            width: 250px;
+            height: 300px;
+            border: 2px solid black;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img {
+            width: 100%;
+            height: 75%;
+            background-color: yellowgreen;
+        }
+
+        .img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            width: 100%;
+            height: 25%;
+            background-color: aqua;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>JavaScript Cards</h1>
+
+    <div class="con" id="con"></div>
+   
+
+    <script>
+
+        let arr = ["./natrual.jpg", "./images.jpg", "./assets/girl.jpeg", "./assets/natrual.jpg",
+         "./assets/girl.jpeg",
+         "./assets/logo.jpg",
+         "./natrual.jpg",
+           "./natrual.jpg",
+             "./natrual.jpg",
+               "./natrual.jpg",
+          ];
+
+
+        let final = '';
+
+        for (let i = 0; i <10 ; ++i) {
+
+            let text = `
+                <div class="card">
+
+                    <div class="img">
+
+                        <img src="${arr[i]}" alt="" style="width:100%;height:100%;">
+
+                    </div>
+
+                    <div class="content">
+                         natrual${i + 1}
+                    </div>
+
+                </div>
+            `;
+
+            final += text;
+
+        }
+
+        document.getElementById("con").innerHTML = final;
+
+    </script>
+
+</body>
+
+</html>
+```

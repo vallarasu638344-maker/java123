@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year Calendar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 20px auto;
+      width: 90%;
+      text-align: center;
+    }
+
+    th {
+      background: #4CAF50;   /* Month header color */
+      color: white;
+      padding: 10px;
+      font-size: 1.2rem;
+    }
+
+    td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .sunday {
+      color: red;   /* Sundays in red */
+      font-weight: bold;
+    }
+
+    .weekday {
+      color: black;
+    }
+
+    .month {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Example: January -->
+  <table class="month">
+    <tr>
+      <th colspan="7">January 2026</th>
+    </tr>
+    <tr>
+      <td class="sunday">S</td>
+      <td class="weekday">M</td>
+      <td class="weekday">T</td>
+      <td class="weekday">W</td>
+      <td class="weekday">T</td>
+      <td class="weekday">F</td>
+      <td class="weekday">S</td>
+    </tr>
+    <tr>
+      <td class="sunday">1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td class="sunday">8</td>
+      <td>9</td>
+      <td>10</td>
+      <td>11</td>
+      <td>12</td>
+      <td>13</td>
+      <td>14</td>
+    </tr>
+    <!-- Continue rows until 31 -->
+  </table>
+
+  <!-- Repeat similar tables for other months -->
+</body>
+</html>

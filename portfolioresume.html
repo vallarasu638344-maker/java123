@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      /* background: linear-gradient(to right, PINK, white, PURPLE); */
+      background-color: greenyellow;
+    }
+    nav {
+      background-color: rgb(17, 16, 16);
+      width: 100%;
+      height: 10vh;
+      display: flex;
+    }
+    .logo {
+      display: flex;
+      text-align: center;
+      padding: 10px;
+      width: 30%;
+      height: 100%;
+      color: rgb(253, 250, 250);
+      margin: auto;
+      font-size: 40px;
+    }
+    .image1 {
+      width: 50px;
+      height: 50px;
+      padding: 5px;
+      border-radius: 50px;
+      background-color: rgb(17, 17, 17);
+    }
+    .ul {
+      margin: auto;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+    .link {
+      text-decoration: none;
+      color: rgb(253, 250, 250);
+      font-size: 22px;
+    }
+    .li {
+      margin: 20px;
+      list-style-type: none;
+    }
+    .main {
+      width: 50%;
+      height: 50%;
+      margin-top: 100px;
+    }
+    h1 {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      color: rgb(17, 17, 17);
+    }
+    p {
+      margin-top: 20px;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      color: rgb(22, 22, 22);
+      font-size: 20px;
+    }
+    .button > button {
+      background-color: rgb(19, 92, 239);
+      border: none;
+      color: white;
+      font-size: 18px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 500;
+      margin: 100px;
+      margin-top: 50px;
+    }
+    .button > button:nth-child(2) {
+      background-color: rgb(58, 125, 227);
+      margin-left: 20px;
+      color: white(28, 118, 159);
+    }
+    .mainimg {
+      width: 50%;
+      height: 50%;
+      margin-left: 800px;
+    }
+    #main-img {
+      position: absolute;
+      top: 2px;
+      right: 150px;
+      width: 20%;
+      height: 30vh;
+      margin-top: 150px;
+      border-radius: 50%;
+    }
+    .container {
+      flex-wrap: wrap;
+    }
+    .do{
+      font-size: 40px;
+      color: maroon;
+      margin-left: 30px;
+    
+    }
+    .html {
+      height: 90px;
+      width: 90px;
+      margin-left: 45px;
+    }
+    .css {
+      height: 80px;
+      width: 95px;
+      margin-left: 60px;
+    }
+    .js {
+      height: 80px;
+      width: 90px;
+      margin-left: 80px;
+    }
+
+    @media screen and (max-width: 850px) {
+      nav {
+        padding: 20px 5%;
+      }
+      nav ul {
+        gap: 16px;
+      }
+      .home {
+        padding: 45px 5%;
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+      .h1 {
+        font-size: 30px;
+      }
+      .p {
+        font-size: 15px;
+      }
+      .buttons {
+        justify-content: center;
+      }
+      .skill-section,
+      .about me,
+      .my-skills,
+      .contact {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+      .my-skills {
+        justify-content: center;
+      }
+      .link{
+        display: none;
+      }
+      
+    }
+    .p {
+      font-size: 15px;
+    }
+
+    @media screen and (max-width: 700px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav ul {
+        gap: 12px;
+        font-size: 14px;
+      }
+      .home {
+        padding: 45px 5%;
+      }
+      .h1 {
+        font-size: 27;
+        width: 170px;
+        height: 160px;
+      }
+      .skill-section,
+      .about me,
+      .my-skills,
+      .contact {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+      .my-skills {
+        justify-content: center;
+      }
+      .contact p {
+        font-size: 15px;
+        word-break: break-word;
+      }
+    }
+    @media screen and (max-width: 700px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav ul {
+        gap: 12px;
+        font-size: 14px;
+      }
+      .home {
+        padding: 45px 5%;
+      }
+      .h1 {
+        font-size: 27;
+        width: 170px;
+        height: 160px;
+      }
+      .skill-section,
+      .about me,
+      .my-skills,
+      .contact {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+      .my-skills {
+        justify-content: center;
+      }
+      .contact p {
+        font-size: 15px;
+        word-break: break-word;
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav ul {
+        gap: 12px;
+        font-size: 14px;
+      }
+      .home {
+        padding: 45px 5%;
+      }
+      .h1 {
+        font-size: 27;
+        width: 170px;
+        height: 160px;
+      }
+      .skill-section,
+      .about me,
+      .my-skills,
+      .contact {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+      .my-skills {
+        justify-content: center;
+      }
+      .contact p {
+        font-size: 15px;
+        word-break: break-word;
+      }
+    }
+    @media screen and (max-width: 400px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav ul {
+        gap: 12px;
+        font-size: 14px;
+      }
+      .home {
+        padding: 45px 5%;
+      }
+      .h1 {
+        font-size: 27;
+        width: 170px;
+        height: 160px;
+      }
+      .skill-section,
+      .about me,
+      .my-skills,
+      .contact {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+      .my-skills {
+        justify-content: center;
+      }
+      .contact p {
+        font-size: 15px;
+        word-break: break-word;
+      }
+    }
+    .footer{
+      /* background-color: aqua; */
+      align-items: center;
+      display:flex;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 20px;
+
+    }
+    h3{
+      /* background-color: red; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 800;
+     color: maroon;
+    }
+  </style>
+  <body>
+    <nav>
+      <div class="logo">
+        <img src= "./logo.jpg"alt="" class="image1" />
+        <span>VALLARASU </span>
+        <div class="hamburger"></div>
+      </div>
+      <ul class="ul">
+        <li class="li"><a href="" class="link">HOME</a></li>
+        <li class="li"><a href="" class="link">ABOUT</a></li>
+        <li class="li"><a href="" class="link">TECH</a></li>
+        <li class="li"><a href="" class="link">RESUME</a></li>
+        <li class="li"><a href="" class="link">CONTACT</a></li>
+      </ul>
+    </nav>
+    <div class="main">
+      <div class="container">
+        <h1>I AM SOFTWARE DEVELOPER</h1>
+        <p>
+          "i am a passionate web DEVELOPER and BSC COMPUTER STUDENT Student who
+          enjoys creating responsive and user friendly websites"
+        </p>
+        <div class="button">
+          <button>HIRE ME</button>
+          <button>DOWNLOAD CV</button>
+        </div>
+      </div>
+      <div class="mainimg">
+       <img src="./assets/passport.jpeg" alt="" id="main-img" >
+      </div>
+    </div>
+    <div class="container">
+      <p class="do">what i do ?</p>
+      <br />
+      <img src="./htmllogo.png" alt="" class="html" />
+      <img src="./cssslogo.png" alt="" class="css" />
+      <img src="./javalogo.jpg" alt="" class="js" />
+    </div>
+    <h1>ABOUT ME</h1>
+    <p>
+      I have graduated bsc.cse in thiru kolanjiappar college,vridhachalam. I
+      HAve interest in some fitness workouts used to do daily and extra things i
+      used to do is listen and sing a songs
+    </p>
+    <br />
+    <br />
+    <h3>CONTACT ME:</h3>
+    <p>PHONE;6383442017</p>
+    <p>Gmail;vallarasu638344@gmail.com</p>
+    <p>location;ulundurpet,chennai,tamilnadu</p>
+    <footer class="footer">THANK U FOR VISITING MY PORTFOLIO</footer>
+  </body>
+</html>

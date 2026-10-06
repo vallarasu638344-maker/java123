@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css"
+      integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+    nav {
+      width: 100%;
+      height: 10vh;
+      
+      display: flex;
+    }
+    .edu-pro {
+      width: 250px;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .edu-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .edu-pro span {
+      font-size: 30px;
+      font-weight: 600;
+      margin-left: 15px;
+      font-family: sans-serif;
+    }
+    .ul {
+      
+      width: 700px;
+      height: 100%;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+    }
+    .ul > li {
+      list-style-type: none;
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+    .link {
+      
+      text-decoration: none;
+    }
+    .request-btn {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+    }
+    .request-btn > i {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      margin-top: 15px;
+    }
+  .btn {
+  background: rgb(81, 158, 239);
+  color: whitesmoke;
+  border: none;
+  padding: 8px 15px;
+  font-size: 20px;
+    }
+    .hero-section {
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+    }
+    .container {
+      width: 50%;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: start;
+      display: flex;
+      padding: 20px 30px;
+      margin: 10px 30px;
+    }
+    .sub-heading {
+      color: rgb(14, 14, 14);
+      letter-spacing: 2px;
+    }
+    .heading {
+      font-size: 50px;
+      font-weight: 800;
+      margin: 10px;
+    }
+    .description {
+      font-size: 20px;
+      font-style: italic;
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: blue;
+      color: aliceblue;
+      font-size: 20px;
+      padding: 10px 25px;
+      border: 1px solid #006bff;
+      margin-left: 20px;
+      border-radius: 30px;
+      margin-top: 30px;
+    }
+    .button2 {
+      background-color: rgb(244, 246, 245);
+      color: rgb(11, 21, 210);
+    }
+    .con-img {
+      margin: auto;
+      
+    }
+    .con-img > img {
+      border-radius: 50%;
+
+      width: 300px;
+      height: 100%;
+    }
+    .menu-bar{
+      width: 50px;
+      height: 50px;
+      display: none;
+    }
+  @media screen and (max-width:700px){
+  
+            nav {
+                position: relative;
+            }
+
+            .ul {
+                display: flex;
+                position: absolute;
+                top:10vh;
+                transition: all 2s linear 0s;
+                left: -100%;
+                right: 0;
+                width: 100%;
+                height: 50vh;
+                flex-direction: column;
+                background-color: rgb(227, 11, 11);
+            }
+
+            /* .ul > li {
+                display: none;
+              
+            } */
+
+            .request-btn {
+                display: none;
+            }
+
+            .menu-bar {
+                 display: block;
+                 margin-left: auto;
+                margin-top: 20px;
+        
+     
+            }
+
+            .hero-section {
+              flex-direction: column;
+            }
+
+
+            .con {
+                width: 100%;
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .con-img > img {
+                width: 300px;
+            }
+            
+        }
+         /* @media screen and (max-width:450px){
+        
+          .ul{
+            display: block;
+          }
+          .ul > li {
+            display: block;
+            color: rgb(250, 247, 247);
+          }
+
+         }
+      
+    
+   */
+  
+  </style>
+  <body>
+    <nav>
+      <div class="edu-pro">
+        <img src="./assets/edubro.jpg" alt="" class="edu-img" />
+        <span>Edupro</span>
+      </div>
+      <ul class="ul" id="ul">
+        <li><a href="" class="link">Home</a></li>
+        <li><a href="" class="link">About</a></li>
+        <li><a href="" class="link">Course</a></li>
+        <li><a href="" class="link">Blog</a></li>
+        <li><a href="" class="link">Contact</a></li>
+      </ul>
+      <div class="request-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <button class="btn">GetStarted</button>
+      </div>
+      <div onclick="toggle()"  class="menu-bar">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </nav>
+    <section class="hero-section">
+      <div class="container">
+        <h3 class="sub-heading">LEARN ANYTHING, ANYWHERE</h3>
+        <h1 class="heading">Build Your Future <br />With Better Learning...</h1>
+        <p class="description">
+          Join thousands of students and learn new skills <br />with our expert
+          insturctors.
+        </p>
+        <div class="btn-group">
+          <button>Explore Courses</button>
+          <button class="button button2">Watch Video</button>
+        </div>
+      </div>
+      <div class="con-img">
+        <img src="./assets/girl.jpeg" />
+      </div>
+    </section>
+    <script>
+      let toggled = false;
+
+function toggle() {
+  const sidebar = document.getElementById("ul");
+//  alert(sidebar)
+  if (!toggled) {
+    sidebar.style.left = "0%"; 
+    toggled = true;
+  } 
+  else{
+    sidebar.style.left = "-100%";
+    toggled = false;
+  }
+}
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    form {
+        width: 400px;
+         margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 50% 90PX;
+        background-image: url(./natrual.jpg);
+      
+    }
+
+    h1 {
+         font-size: 30px;
+        color: red;
+        margin-top: 50px;
+        text-align: center;
+     
+    }
+    label{
+         display: inline-block;
+        width: 100px;
+        margin: 8px;
+        color: ;
+    }
+    input{
+         padding: 6px;
+        margin-bottom: 10px;
+        border: 1px solid rgb(29, 28, 28);
+        border-radius: 30px;
+    }
+        button {
+      background-color: purple;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 10px;
+      
+    }
+    button:hover {
+      background-color:red;
+      
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background:rgb(152, 155, 152);
+      border: 1px solid rgb(57, 243, 10);
+      border-radius:50%;
+      text-align: center;
+    }
+
+
+  </style>
+  <body>
+    <h1 id="head">STUDENT DETAILS</h1>
+    <form action="" id="form">
+        <label for="">NAME</label>
+      <input type="text" name="student name"   id="studentname" ><br/>
+      <label for="">STUDENT ID</label>
+      <input type="text" name="student id"   id="studentId" ><br />
+      <label for="">EMAIL</label>
+      <input type="text" name="email"   id="email" ><br />
+      <label for="">DEPARTMENT</label>
+      <input type="text" name="student name"  id="department" ><br />
+      <label for="">MARK</label>
+      <input type="text" name="mark"  id="mark" ><br />
+      <BUtton onclick="submit()">SUBMIT</BUtton>
+      <div class="student result " > ===STUDENT RESULT=== </div>
+     </form>
+  </body>
+  <script>
+    function submit() {
+      let name = document.getElementById("studentname").value;
+      if (name === "") {
+        alert("Name cannot be empty!");
+        return;
+      }
+      name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
+      let studentId= document.getElementById("studentId").value;
+       let validId = studentId.startsWith("STU") && studentId.length === 6;
+      let email = document.getElementById("email").value;
+      let department = document.getElementById("department").value;
+      let mark= Number(document.getElementById("mark").value);
+
+
+    }
+
+    
+
+
+  </script>
+
+</html>

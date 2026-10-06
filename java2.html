@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css"
+      integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    ">
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .con {
+      width: 250px;
+      height: 50vh;
+      margin: 35px auto;
+      position: relative;
+
+      background-image: url(./natrual.jpg);
+    }
+    h2 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: azure;
+    }
+    .form2 {
+      margin-left: 70px;
+      color: rgb(135, 243, 11);
+      margin-top: 50px;
+      margin-left: 60px;
+    }
+    .button {
+      padding: 5px 5px;
+      margin-top: 20px;
+      background-color: rgb(52, 10, 238);
+      color: rgb(255, 253, 253);
+      border-radius: 30px;
+      margin-left: 90px;
+    }
+    #icon {
+      position: absolute;
+      top: 1px;
+      right: 20px;
+      font-size: 25px;
+      color: red;
+
+      margin-top: 20px;
+    }
+  </style>
+
+  <body>
+    <div class="con" id="form">
+      <h2>CREAT ACCOUNT</h2>
+      <i
+        class="fa-regular fa-circle-xmark"
+        id="icon"
+        onclick="document.getElementById('form').style.display = 'none'"
+      ></i>
+
+      <div class="form2">
+        <label for="">NAME</label>
+        <input type="text" placeholder="NAME" /><br />
+        <label for="">EMAIL</label>
+        <input type="number" placeholder="EMAIL" /><br />
+        <label for="">AGE</label>
+        <input type="number" placeholder="AGE" /><br />
+        <label for="">GEND</label>
+        <input type="number" placeholder="GENDER" /><br />
+        <button type="" class="button">SUBMIT</button>
+      </div>
+    </div>
+  </body>
+</html>

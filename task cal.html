@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2026 Calendar</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: white;
+      font-family: arial;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .calendar {
+      width: 800px;
+      max-width: 100%;
+      padding: 40px;
+      border: 20px solid rgb(82, 82, 82);
+      border-right: 20px solid rgb(32, 30, 30);
+      border-bottom: 20px solid rgb(46, 45, 45);
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 42px 35px;
+
+      background-image: url(./natrual.jpg);
+    }
+
+    .month {
+      border: 1px solid #aaa;
+      min-height: 215px;
+      padding: 0 8px 10px;
+    }
+
+    .month h3 {
+      text-align: center;
+      font-size: 14px;
+      margin: 8px 0 4px;
+    }
+
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 8px 0;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      row-gap: 12px;
+      font-size: 13px;
+    }
+
+    .days span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 13px;
+      color: whitesmoke;
+    }
+    .days span:hover{
+        background-color: red;
+        border-radius: 50%;
+    }
+    
+    .january .weekdays {
+      background: #6666d9;
+    }
+
+    .february .weekdays {
+      background: #eeee4c;
+    }
+
+    .march .weekdays {
+      background: #28d9dc;
+    }
+
+    .april .weekdays {
+      background: #a8f2a8;
+    }
+
+    .may .weekdays {
+      background: #d54be2;
+    }
+
+    .june .weekdays {
+      background: #f28ab9;
+    }
+
+    .july .weekdays {
+      background: #9694ef;
+    }
+
+    .august .weekdays {
+      background: #0871ed;
+    }
+
+    .september .weekdays {
+      background: #ffd09e;
+    }
+
+    .october .weekdays {
+      background: #f15d8c;
+    }
+
+    .november .weekdays {
+      background: #52ef64;
+    }
+
+    .december .weekdays {
+      background: #c600e8;
+    }
+
+    @media (max-width: 750px) {
+      body {
+        padding: 15px;
+      }
+
+      .calendar {
+        padding: 25px;
+        border-width: 12px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      body {
+        padding: 10px;
+      }
+
+      .calendar {
+        width: 100%;
+        padding: 15px;
+        border-width: 8px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .month {
+        min-height: auto;
+        padding-bottom: 15px;
+      }
+
+      .month h3 {
+        font-size: 16px;
+      }
+
+      .weekdays {
+        font-size: 14px;
+      }
+
+      .days {
+        font-size: 14px;
+        row-gap: 14px;
+      }
+    }
+  </style>
+  <body>
+    <div class="calendar">
+      <div class="month january">
+        <h3>JANUARY</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span>1</span><span>2</span>
+
+          <span class="sun">3</span><span>4</span><span>5</span><span>6</span>
+          <span>7</span><span>8</span><span>9</span>
+
+          <span class="sun">10</span><span>11</span><span>12</span
+          ><span>13</span> <span>14</span><span>15</span><span>16</span>
+
+          <span class="sun">17</span><span>18</span><span>19</span
+          ><span>20</span> <span>21</span><span>22</span><span>23</span>
+
+          <span class="sun">24</span><span>25</span><span>26</span
+          ><span>27</span> <span>28</span><span>29</span><span>30</span>
+
+          <span class="sun">31</span>
+        </div>
+      </div>
+
+      <div class="month february">
+        <h3>FEBRUARY</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="sun">1</span><span>2</span><span>3</span><span>4</span>
+          <span>5</span><span>6</span><span>7</span>
+
+          <span class="sun">8</span><span>9</span><span>10</span><span>11</span>
+          <span>12</span><span>13</span><span>14</span>
+
+          <span class="sun">15</span><span>16</span><span>17</span
+          ><span>18</span> <span>19</span><span>20</span><span>21</span>
+
+          <span class="sun">22</span><span>23</span><span>24</span
+          ><span>25</span> <span>26</span><span>27</span><span>28</span>
+        </div>
+      </div>
+
+      <div class="month march">
+        <h3>MARCH</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="sun">1</span><span>2</span><span>3</span><span>4</span>
+          <span>5</span><span>6</span><span>7</span>
+
+          <span class="sun">8</span><span>9</span><span>10</span><span>11</span>
+          <span>12</span><span>13</span><span>14</span>
+
+          <span class="sun">15</span><span>16</span><span>17</span
+          ><span>18</span> <span>19</span><span>20</span><span>21</span>
+
+          <span class="sun">22</span><span>23</span><span>24</span
+          ><span>25</span> <span>26</span><span>27</span><span>28</span>
+
+          <span class="sun">29</span><span>30</span><span>31</span>
+        </div>
+      </div>
+
+      <div class="month april">
+        <h3>APRIL</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span>1</span><span>2</span><span>3</span>
+
+          <span class="sun">4</span><span>5</span><span>6</span><span>7</span>
+          <span>8</span><span>9</span><span>10</span>
+
+          <span class="sun">11</span><span>12</span><span>13</span
+          ><span>14</span> <span>15</span><span>16</span><span>17</span>
+
+          <span class="sun">18</span><span>19</span><span>20</span
+          ><span>21</span> <span>22</span><span>23</span><span>24</span>
+
+          <span class="sun">25</span><span>26</span><span>27</span
+          ><span>28</span> <span>29</span><span>30</span>
+        </div>
+      </div>
+
+      <div class="month may">
+        <h3>MAY</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span>1</span><span>2</span>
+
+          <span class="sun">3</span><span>4</span><span>5</span><span>6</span>
+          <span>7</span><span>8</span><span>9</span>
+
+          <span class="sun">10</span><span>11</span><span>12</span
+          ><span>13</span> <span>14</span><span>15</span><span>16</span>
+
+          <span class="sun">17</span><span>18</span><span>19</span
+          ><span>20</span> <span>21</span><span>22</span><span>23</span>
+
+          <span class="sun">24</span><span>25</span><span>26</span
+          ><span>27</span> <span>28</span><span>29</span><span>30</span>
+
+          <span class="sun">31</span>
+        </div>
+      </div>
+
+      <div class="month june">
+        <h3>JUNE</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span>1</span><span>2</span><span>3</span>
+          <span>4</span><span>5</span>
+
+          <span class="sun">6</span><span>7</span><span>8</span><span>9</span>
+          <span>10</span><span>11</span><span>12</span>
+
+          <span class="sun">13</span><span>14</span><span>15</span
+          ><span>16</span> <span>17</span><span>18</span><span>19</span>
+
+          <span class="sun">20</span><span>21</span><span>22</span
+          ><span>23</span> <span>24</span><span>25</span><span>26</span>
+
+          <span class="sun">27</span><span>28</span><span>29</span
+          ><span>30</span>
+        </div>
+      </div>
+
+      <div class="month july">
+        <h3>JULY</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span class="empty"></span> <span>1</span
+          ><span>2</span><span>3</span>
+
+          <span class="sun">4</span><span>5</span><span>6</span><span>7</span>
+          <span>8</span><span>9</span><span>10</span>
+
+          <span class="sun">11</span><span>12</span><span>13</span
+          ><span>14</span> <span>15</span><span>16</span><span>17</span>
+
+          <span class="sun">18</span><span>19</span><span>20</span
+          ><span>21</span> <span>22</span><span>23</span><span>24</span>
+
+          <span class="sun">25</span><span>26</span><span>27</span
+          ><span>28</span> <span>29</span><span>30</span><span>31</span>
+        </div>
+      </div>
+
+      <div class="month august">
+        <h3>AUGUST</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="sun">1</span><span>2</span><span>3</span><span>4</span>
+          <span>5</span><span>6</span><span>7</span>
+
+          <span class="sun">8</span><span>9</span><span>10</span><span>11</span>
+          <span>12</span><span>13</span><span>14</span>
+
+          <span class="sun">15</span><span>16</span><span>17</span
+          ><span>18</span> <span>19</span><span>20</span><span>21</span>
+
+          <span class="sun">22</span><span>23</span><span>24</span
+          ><span>25</span> <span>26</span><span>27</span><span>28</span>
+
+          <span class="sun">29</span><span>30</span><span>31</span>
+        </div>
+      </div>
+
+      <div class="month september">
+        <h3>SEPTEMBER</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span class="empty"></span> <span>1</span
+          ><span>2</span><span>3</span><span>4</span><span>5</span>
+
+          <span class="sun">6</span><span>7</span><span>8</span><span>9</span>
+          <span>10</span><span>11</span><span>12</span>
+
+          <span class="sun">13</span><span>14</span><span>15</span
+          ><span>16</span> <span>17</span><span>18</span><span>19</span>
+
+          <span class="sun">20</span><span>21</span><span>22</span
+          ><span>23</span> <span>24</span><span>25</span><span>26</span>
+
+          <span class="sun">27</span><span>28</span><span>29</span
+          ><span>30</span>
+        </div>
+      </div>
+
+      <div class="month october">
+        <h3>OCTOBER</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span class="empty"></span> <span>1</span
+          ><span>2</span>
+
+          <span class="sun">3</span><span>4</span><span>5</span><span>6</span>
+          <span>7</span><span>8</span><span>9</span>
+
+          <span class="sun">10</span><span>11</span><span>12</span
+          ><span>13</span> <span>14</span><span>15</span><span>16</span>
+
+          <span class="sun">17</span><span>18</span><span>19</span
+          ><span>20</span> <span>21</span><span>22</span><span>23</span>
+
+          <span class="sun">24</span><span>25</span><span>26</span
+          ><span>27</span> <span>28</span><span>29</span><span>30</span>
+
+          <span class="sun">31</span>
+        </div>
+      </div>
+
+      <div class="month november">
+        <h3>NOVEMBER</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span class="empty"></span>
+          <span class="empty"></span><span class="empty"></span>
+          <span>1</span>
+
+          <span class="sun">2</span><span>3</span><span>4</span><span>5</span>
+          <span>6</span><span>7</span><span>8</span>
+
+          <span class="sun">9</span><span>10</span><span>11</span
+          ><span>12</span> <span>13</span><span>14</span><span>15</span>
+
+          <span class="sun">16</span><span>17</span><span>18</span
+          ><span>19</span> <span>20</span><span>21</span><span>22</span>
+
+          <span class="sun">23</span><span>24</span><span>25</span
+          ><span>26</span> <span>27</span><span>28</span><span>29</span>
+
+          <span class="sun">30</span>
+        </div>
+      </div>
+
+      <div class="month december">
+        <h3>DECEMBER</h3>
+        <div class="weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span> <span>T</span
+          ><span>F</span><span>S</span>
+        </div>
+        <div class="days">
+          <span class="empty"></span><span>1</span><span>2</span><span>3</span>
+          <span>4</span><span>5</span>
+
+          <span class="sun">6</span><span>7</span><span>8</span><span>9</span>
+          <span>10</span><span>11</span><span>12</span>
+
+          <span class="sun">13</span><span>14</span><span>15</span
+          ><span>16</span> <span>17</span><span>18</span><span>19</span>
+
+          <span class="sun">20</span><span>21</span><span>22</span
+          ><span>23</span> <span>24</span><span>25</span><span>26</span>
+
+          <span class="sun">27</span><span>28</span><span>29</span
+          ><span>30</span>
+          <span>31</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

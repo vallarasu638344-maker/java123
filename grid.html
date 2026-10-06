@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: aqua;
+            width: 100%;
+            display: grid;
+            grid-template-areas:
+                "header header header header"
+                "nav nav nav nav"
+                "main main main main "
+                "main main main main "
+                "section section article article"
+                "footer footer footer footer"
+            ;
+            grid-template-rows: 8vh 10vh 40vh 40vh 500px 10vh;
+
+        }
+
+        .sub {
+            border: 2px solid black;
+            padding: 10px;
+        }
+
+        .header {grid-area:header ;background-color:red ;}
+
+        .nav {grid-area:nav ;background-color:blue ;}
+
+        .main {grid-area:main ;background-color: green;}
+
+        .section {grid-area:section ;background-color:yellow ;}
+
+        .article {grid-area:article ;background-color:orange ;}
+
+        .footer {grid-area:footer ;background-color:black ;}
+
+
+
+        @media screen and (max-width:430px){
+            .container{
+                grid-template-areas:
+                "header header header header"
+                "nav nav nav nav"
+                "main main main main "
+                "section section section section"
+                "article article article article"
+                "footer footer footer footer"
+            ;
+            grid-template-rows: 8vh 10vh 80vh 40vh auto 10vh;
+            }
+        } 
+    </style>
+</head>
+<div class="container">
+    <div class="sub header"> header</div>
+    <div class="sub nav"> nav</div>
+    <div class="sub main">main</div>
+    <div class="sub section"> section</div>
+    <div class="sub article"> <article></article></div>
+    <div class="sub footer"> footer</div>
+</div>
+
+<body>
+
+</body>
+
+</html>

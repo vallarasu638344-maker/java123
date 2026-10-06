@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        form{
+            margin: 40px;
+            padding: 50px;
+            text-align: center;
+            background: linear-gradient(yellow,blue);
+        }
+    </style>
+</head>
+
+<body>
+    <form method="get" action="./day-2.html" enctype="multipart/form-data">
+       <label for="">name</label>
+       <input type="text" name="name"><br>
+       <label for="">age</label>
+       <input type="number" name="age"><br>
+       <label for="">gender</label><br>
+       <label for="">password</label>
+       <input type="password" name="password">
+       <input type="radio" name="gender" value="male"><br>
+       <label for="">male</label>
+       <input type="radio" name="gender" value="female"><br>
+       <label style="background-color: blue; font-size: 20px; ">female</label>
+       <input type="radio" name="gender" value="others"><br>
+       <label for="">others</label>
+       <input type="submit"><br>
+       <label for="">email</label>
+       <input type="email" name="email" required>
+
+    </form>
+
+    
+</body>
+</html>
