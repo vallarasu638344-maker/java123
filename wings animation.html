@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wing Animation</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+            color: white;
+            font-family: Arial;
+        }
+
+        .bird {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 40px;
+        }
+
+        .wing {
+            font-size: 90px;
+            display: inline-block;
+            animation: flap 0.6s ease-in-out infinite alternate;
+        }
+
+        .left {
+            transform-origin: right center;
+        }
+
+        .right {
+            transform-origin: left center;
+        }
+
+        @keyframes flap {
+            from {
+                transform: rotate(180deg);
+            }
+
+            to {
+                transform: rotate(-180deg);
+            }
+        }
+
+        .body {
+            font-size: 40px;
+            z-index: 2;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 22px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #speedText {
+            font-size: 20px;
+            min-width: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bird">
+        <div class="wing left">🪽</div>
+        <div class="body">🐦</div>
+        <div class="wing right">🪽</div>
+    </div>
+
+    <div class="controls">
+        <button onclick="decreaseSpeed()">-Speed</button><br>
+       
+        <span id="speedText">0.6 sec</span><br>
+      
+        <button onclick="increaseSpeed()">+ Speed</button>
+    </div>
+
+    <script>
+        const wings = document.querySelectorAll(".wing");
+
+        let speed = 0.6;
+
+        function updateSpeed() {
+            wings.forEach(wing => {
+                wing.style.animationDuration = speed + "s";
+            });
+
+            document.getElementById("speedText").innerText =
+                speed.toFixed(1) + " sec";
+        }
+
+        function decreaseSpeed() {
+            // Faster
+            if (speed > 0.1) {
+                speed -= 0.1;
+                updateSpeed();
+            }
+        }
+
+        function increaseSpeed() {
+            // Slower
+            if (speed < 2.0) {
+                speed += 0.1;
+                updateSpeed();
+            }
+        }
+
+        
+        updateSpeed();
+    </script>
+
+</body>
+</html>
