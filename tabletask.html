@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Student Registration </title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf2ff;
+            padding: 15px;
+        }
+
+        .main-container{
+            width: 95%;
+            margin: auto;
+            background-color: white;
+            border: 3px solid black;
+        }
+
+         .head {           
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .head h1 {
+            margin-bottom: 8px;
+        }
+
+        .section {
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid gray;
+        }
+
+        .section h3 {
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .personal,
+        .terms,
+        .buttons {
+            grid-column: 1 / 3;
+        }
+
+        .fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .personal .fields {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid gray;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 70px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: auto;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        a {
+            color: blue;
+        }
+
+        .buttons {
+            text-align: center;
+            padding: 20px;
+            background-color: #e5f2ff;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background-color: blue;
+            color: white;
+        }
+
+        .reset-btn {
+            background-color: gray;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+    <div class="head">
+        <h1>Student Registration Form</h1>
+        <p>Fill in your details below Registration</p>
+    </div>
+
+    <form>
+
+        <div class="section personal">
+            <h3><i class="fa-solid fa-user"></i>1. Personal Details</h3>
+
+            <div class="fields">
+                <div>
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter your name">
+                </div>
+
+                <div>
+                    <label>Date of Birth</label>
+                    <input type="date">
+                </div>
+
+                <div>
+                    <label>Gender</label>
+                    <input type="radio" name="gender"> Male
+                    <input type="radio" name="gender"> Female
+                </div>
+
+                <div>
+                    <label>Father's Name</label>
+                    <input type="text" placeholder="Father's name">
+                </div>
+
+                <div>
+                    <label>Mother's Name</label>
+                    <input type="text" placeholder="Mother's name">
+                </div>
+
+                <div>
+                    <label>Blood Group</label>
+                    <select>
+                        <option>Select Blood Group</option>
+                        <option>A+</option>
+                        <option>B+</option>
+                        <option>O+</option>
+                        <option>AB+</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="section contact">
+            <h3><i class="fa-solid fa-phone-flip"></i>2. Contact Details</h3>
+
+            <label>Email</label>
+            <input type="email" placeholder="Enter email">
+
+            <label>Mobile Number</label>
+            <input type="tel" placeholder="Enter mobile number">
+
+            <label>Address</label>
+            <textarea placeholder="Enter address"></textarea>
+        </div>
+
+        <div class="section course">
+            <h3><i class="fa-solid fa-graduation-cap"></i>3. Course Details</h3>
+
+            <label>Select Course</label>
+            <select>
+                <option>Select Course</option>
+                <option>Full Stack Development</option>
+                <option>Python</option>
+                <option>Java</option>
+                <option>Web Development</option>
+            </select>
+
+            <p>Preferred Batch</p>
+            <input type="radio" name="batch"> Morning
+            <input type="radio" name="batch"> Evening
+
+            <p>Learning Mode</p>
+            <input type="checkbox"> Online
+            <input type="checkbox"> Offline
+        </div>
+
+        <div class="section education">
+            <h3><i class="fa-solid fa-book-open"></i>4. Educational Details</h3>
+
+            <label>Qualification</label>
+            <select>
+                <option>Select Qualification</option>
+                <option>SSLC</option>
+                <option>HSC</option>
+                <option>UG</option>
+                <option>PG</option>
+            </select>
+
+            <label>Year of Passing</label>
+            <input type="number" placeholder="2026">
+
+            <label>Percentage / CGPA</label>
+            <input type="text" placeholder="Enter marks">
+
+            <label>College Name</label>
+            <input type="text" placeholder="Enter college name">
+        </div>
+
+        <div class="section skills">
+            <h3><i class="fa-solid fa-gear"></i>5. Skills and Interests</h3>
+
+            <input type="checkbox"> C
+            <input type="checkbox"> C++
+            <input type="checkbox"> Java
+            <input type="checkbox"> Python
+            <input type="checkbox"> HTML
+            <input type="checkbox"> CSS
+            <input type="checkbox"> JavaScript
+        </div>
+
+        <div class="section additional">
+            <h3><i class="fa-solid fa-paperclip"></i>6. Additional Information</h3>
+
+            <label>Upload Photo</label>
+            <input type="file">
+
+            <label>Upload Resume</label>
+            <input type="file">
+
+            <label>Any Message</label>
+            <textarea placeholder="Enter your message"></textarea>
+        </div>
+
+        <div class="section terms">
+            <h3><i class="fa-solid fa-file-lines"></i>7. Terms and Conditions</h3>
+
+            <input type="checkbox" required>
+            I agree to the terms and conditions.
+
+            <br><br>
+            <a href="#">Read Terms</a>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="submit-btn">
+                Submit Form
+            </button>
+
+            <button type="reset" class="reset-btn">
+                Reset Form
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
