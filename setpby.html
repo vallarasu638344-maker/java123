@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management & Performance Analytics System (MGI-FE-PROJ-01)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg-light: #f8fafc;
+      --card-bg: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg-light); color: var(--text-dark); min-height: 100vh; }
+
+    .app-container { display: flex; min-height: 100vh; }
+    .sidebar { width: 250px; background: #1e293b; color: white; padding: 1rem; transition: transform 0.2s ease; }
+    .sidebar-header h2 { font-size: 1.25rem; margin-bottom: 2rem; color: #38bdf8; }
+    .nav-links { list-style: none; }
+    .nav-links li { margin-bottom: 0.5rem; }
+    .nav-btn { color: #94a3b8; text-decoration: none; display: block; padding: 0.75rem 1rem; border-radius: 6px; font-weight: 500; }
+    .nav-btn.active, .nav-btn:hover { background: #334155; color: white; }
+
+    .main-content { flex: 1; padding: 1.5rem; overflow-y: auto; }
+    .top-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    #toggle-sidebar { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; }
+
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    .card { background: var(--card-bg); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1rem; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .kpi-card { background: var(--card-bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
+    .kpi-card p { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin-top: 0.5rem; }
+
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; }
+
+    .table-container { overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.9rem; }
+    .data-table th, .data-table td { border: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left; }
+    .data-table th { background: #f1f5f9; }
+
+    .btn { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 500; }
+    .btn.primary { background: var(--primary); color: white; }
+    .btn.secondary { background: #e2e8f0; color: var(--text-dark); }
+    .btn.danger { background: var(--danger); color: white; }
+    .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+
+    .actions-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem; flex-wrap: wrap; }
+    .search-filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    input, select, textarea { padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.9rem; }
+    .form-group { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.25rem; }
+    .form-inline { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+
+    .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .avatar-placeholder { width: 36px; height: 36px; border-radius: 50%; background: #cbd5e1; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+
+    .badge { padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.75rem; color: white; text-align: center; display: inline-block; }
+    .badge.green { background: var(--success); }
+    .badge.amber { background: var(--warning); }
+    .badge.red { background: var(--danger); }
+
+    .bar-container { background: #e2e8f0; height: 16px; border-radius: 8px; overflow: hidden; margin-top: 4px; }
+    .bar-fill { background: var(--primary); height: 100%; transition: width 0.3s; }
+
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: white; padding: 1.5rem; border-radius: 8px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; position: relative; }
+    .close-modal { position: absolute; right: 1rem; top: 1rem; font-size: 1.5rem; cursor: pointer; }
+    .error-msg { color: var(--danger); font-size: 0.8rem; }
+    .alert { padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
+    .alert.success { background: #d1fae5; color: #065f46; }
+    .alert.error { background: #fee2e2; color: #991b1b; }
+
+    .mb-1 { margin-bottom: 1rem; }
+    .mt-1 { margin-top: 1rem; }
+
+    @media print {
+      .sidebar, .top-header, .actions-bar, .btn, .no-print { display: none !important; }
+      .main-content { padding: 0 !important; margin: 0 !important; }
+      .card { border: none !important; box-shadow: none !important; page-break-inside: avoid; }
+      body { background: white !important; color: black !important; }
+      .data-table th, .data-table td { border: 1px solid #000 !important; }
+    }
+
+    @media (max-width: 768px) {
+      .app-container { flex-direction: column; }
+      .sidebar { width: 100%; transform: translateY(-100%); position: absolute; z-index: 10; display: none; }
+      .sidebar.show { transform: translateY(0); display: block; }
+      #toggle-sidebar { display: block; }
+      .grid-2col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>MGI Analytics</h2>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-btn active" data-page="dashboard">Dashboard</a></li>
+        <li><a href="#" class="nav-btn" data-page="students">Students</a></li>
+        <li><a href="#" class="nav-btn" data-page="attendance">Attendance</a></li>
+        <li><a href="#" class="nav-btn" data-page="tasks">Tasks</a></li>
+        <li><a href="#" class="nav-btn" data-page="activities">Activities</a></li>
+        <li><a href="#" class="nav-btn" data-page="analysis">Analysis & Rules</a></li>
+        <li><a href="#" class="nav-btn" data-page="reports">Reports & Export</a></li>
+        <li><a href="#" class="nav-btn" data-page="data">Data Management</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <button id="toggle-sidebar" class="btn-icon">☰</button>
+        <h1 id="page-title">Dashboard</h1>
+      </header>
+
+      <div id="alert-container"></div>
+
+      <!-- Module A: Dashboard -->
+      <section id="page-dashboard" class="page-section active">
+        <div class="kpi-grid">
+          <div class="kpi-card"><h3>Total Students</h3><p id="kpi-total-students">0</p></div>
+          <div class="kpi-card"><h3>Active Students</h3><p id="kpi-active-students">0</p></div>
+          <div class="kpi-card"><h3>Today Attendance</h3><p id="kpi-today-att">0%</p></div>
+          <div class="kpi-card"><h3>Task Completion</h3><p id="kpi-task-rate">0%</p></div>
+          <div class="kpi-card"><h3>Net Points</h3><p id="kpi-net-points">0</p></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>Today's Attendance Breakdown</h3>
+            <div id="attendance-breakdown" class="chart-container"></div>
+          </div>
+          <div class="card">
+            <h3>Course Distribution</h3>
+            <div id="course-distribution" class="chart-container"></div>
+          </div>
+          <div class="card">
+            <h3>Task Status Distribution</h3>
+            <div id="task-distribution" class="chart-container"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module B & C: Students List -->
+      <section id="page-students" class="page-section">
+        <div class="actions-bar">
+          <div class="search-filter-group">
+            <input type="text" id="student-search" placeholder="Search by name or ID...">
+            <select id="filter-course"><option value="">All Courses</option></select>
+            <select id="filter-status">
+              <option value="">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <button id="btn-clear-filters" class="btn secondary">Clear</button>
+          </div>
+          <button id="btn-open-student-modal" class="btn primary">+ Add Student</button>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Batch</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="students-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Module D: Attendance -->
+      <section id="page-attendance" class="page-section">
+        <div class="card">
+          <h3>Daily Attendance Sheet</h3>
+          <div class="form-inline mb-1">
+            <label for="att-date">Select Date: </label>
+            <input type="date" id="att-date">
+            <button id="btn-mark-all-present" class="btn secondary">Mark All Present</button>
+            <button id="btn-save-attendance" class="btn primary">Save Attendance</button>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student ID</th>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-sheet-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module E: Tasks -->
+      <section id="page-tasks" class="page-section">
+        <div class="grid-2col">
+          <div class="card">
+            <h3>Create Task</h3>
+            <form id="form-task">
+              <div class="form-group">
+                <label for="task-student">Student (required)</label>
+                <select id="task-student" required></select>
+              </div>
+              <div class="form-group">
+                <label for="task-title">Title (3-100 chars)</label>
+                <input type="text" id="task-title" required minlength="3" maxlength="100">
+              </div>
+              <div class="form-group">
+                <label for="task-desc">Description</label>
+                <textarea id="task-desc" maxlength="500"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="task-due">Due Date</label>
+                <input type="date" id="task-due" required>
+              </div>
+              <button type="submit" class="btn primary">Assign Task</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Tasks List</h3>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Title</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="tasks-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module F: Activities -->
+      <section id="page-activities" class="page-section">
+        <div class="grid-2col">
+          <div class="card">
+            <h3>Record Activity</h3>
+            <form id="form-activity">
+              <div class="form-group">
+                <label for="act-student">Student</label>
+                <select id="act-student" required></select>
+              </div>
+              <div class="form-group">
+                <label for="act-type">Type</label>
+                <select id="act-type">
+                  <option value="Positive">Positive (+)</option>
+                  <option value="Negative">Negative (-)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="act-category">Category</label>
+                <select id="act-category"></select>
+              </div>
+              <div class="form-group">
+                <label for="act-points">Points (1 - 100)</label>
+                <input type="number" id="act-points" min="1" max="100" required>
+              </div>
+              <div class="form-group">
+                <label for="act-desc">Description</label>
+                <input type="text" id="act-desc" required minlength="5" maxlength="300">
+              </div>
+              <button type="submit" class="btn primary">Save Activity</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Activity History</h3>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Points</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody id="activities-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module G: Performance Analysis -->
+      <section id="page-analysis" class="page-section">
+        <div class="card mb-1">
+          <h3>Individual Student Indicator Matrix</h3>
+          <div class="form-inline mb-1">
+            <label for="analysis-student-select">Select Student: </label>
+            <select id="analysis-student-select"></select>
+          </div>
+          <div id="analysis-results"></div>
+        </div>
+
+        <div class="card">
+          <h3>Rating Rules Explanation</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>Indicator</th><th>Green</th><th>Amber</th><th>Red</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Attendance %</td><td>≥ 90.0%</td><td>75.0% - 89.9%</td><td>&lt; 75.0%</td></tr>
+              <tr><td>Task Completion %</td><td>≥ 80.0%</td><td>50.0% - 79.9%</td><td>&lt; 50.0%</td></tr>
+              <tr><td>Overdue Tasks</td><td>0</td><td>1 - 2</td><td>≥ 3</td></tr>
+              <tr><td>Net Points</td><td>≥ +10</td><td>0 to +9</td><td>&lt; 0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Module H: Reports -->
+      <section id="page-reports" class="page-section">
+        <div class="card mb-1 no-print">
+          <h3>Report Generator</h3>
+          <div class="form-inline">
+            <button id="btn-print-report" class="btn primary">Print / Save as PDF</button>
+            <button id="btn-export-csv" class="btn secondary">Export CSV (Students)</button>
+          </div>
+        </div>
+
+        <div class="card" id="printable-report">
+          <h2>Institute Performance & Analytics Summary Report</h2>
+          <p>Generated Date: <span id="report-date"></span></p>
+          <hr style="margin: 1rem 0;">
+          <div id="report-content"></div>
+        </div>
+      </section>
+
+      <!-- Module I: Storage Controls -->
+      <section id="page-data" class="page-section">
+        <div class="card">
+          <h3>Storage Controls</h3>
+          <button id="btn-load-sample" class="btn secondary">Load Sample Data</button>
+          <button id="btn-clear-data" class="btn danger">Clear All Data</button>
+        </div>
+        <div class="card mt-1">
+          <h3>Data & Local Storage Notice</h3>
+          <p>Local Storage is specific to one browser on one device. It does not offer cloud synchronisation or multi-user security. It may be cleared by browser settings or the user. Do not store confidential real student data.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Student Form Modal -->
+  <div id="student-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2 id="modal-title">Add Student</h2>
+      <form id="form-student">
+        <input type="hidden" id="student-internal-id">
+        <div class="form-group">
+          <label for="stu-code">Student ID (Required, Unique)</label>
+          <input type="text" id="stu-code" required>
+          <small class="error-msg" id="err-stu-code"></small>
+        </div>
+        <div class="form-group">
+          <label for="stu-name">Full Name</label>
+          <input type="text" id="stu-name" required>
+        </div>
+        <div class="form-group">
+          <label for="stu-phone">Phone Number</label>
+          <input type="text" id="stu-phone" required>
+        </div>
+        <div class="form-group">
+          <label for="stu-email">Email</label>
+          <input type="email" id="stu-email">
+        </div>
+        <div class="form-group">
+          <label for="stu-course">Course</label>
+          <select id="stu-course" required></select>
+        </div>
+        <div class="form-group">
+          <label for="stu-batch">Batch</label>
+          <input type="text" id="stu-batch" required>
+        </div>
+        <div class="form-group">
+          <label for="stu-join">Joining Date</label>
+          <input type="date" id="stu-join" required>
+        </div>
+        <div class="form-group">
+          <label for="stu-status">Status</label>
+          <select id="stu-status">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="stu-photo">Profile Photo (&lt; 2MB)</label>
+          <input type="file" id="stu-photo" accept="image/jpeg,image/png,image/webp">
+          <div id="photo-preview-container" class="mt-1"></div>
+        </div>
+        <button type="submit" class="btn primary">Save Student</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FULL JAVASCRIPT LOGIC -->
+  <script>
+    const CONFIG = {
+      KEYS: {
+        STUDENTS: 'mgi_sms_students',
+        ATTENDANCE: 'mgi_sms_attendance',
+        TASKS: 'mgi_sms_tasks',
+        ACTIVITIES: 'mgi_sms_activities',
+        META: 'mgi_sms_meta'
+      },
+      COURSES: ['Web Development', 'Data Science', 'UI/UX Design', 'Cybersecurity'],
+      POSITIVE_CATEGORIES: ['Class Participation', 'Project Excellence', 'Helping Peers', 'Punctuality', 'Leadership'],
+      NEGATIVE_CATEGORIES: ['Late Arrival', 'Incomplete Work', 'Misconduct', 'Unexcused Absence', 'Distraction']
+    };
+
+    const StorageModule = {
+      getCollection(key) {
+        try {
+          const data = localStorage.getItem(key);
+          if (!data) return [];
+          const parsed = JSON.parse(data);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+          console.error(`Error parsing ${key}:`, e);
+          return [];
+        }
+      },
+
+      saveCollection(key, data) {
+        try {
+          localStorage.setItem(key, JSON.stringify(data));
+          return true;
+        } catch (e) {
+          alert("Storage Quota Exceeded!");
+          return false;
+        }
+      },
+       
+      getStudents() { return this.getCollection(CONFIG.KEYS.STUDENTS); },
+      saveStudents(students) { return this.saveCollection(CONFIG.KEYS.STUDENTS, students); },
+      
+      getAttendance() { return this.getCollection(CONFIG.KEYS.ATTENDANCE); },
+      saveAttendance(attendance) { return this.saveCollection(CONFIG.KEYS.ATTENDANCE, attendance); },
+
+      getTasks() { return this.getCollection(CONFIG.KEYS.TASKS); },
+      saveTasks(tasks) { return this.saveCollection(CONFIG.KEYS.TASKS, tasks); },
+
+      getActivities() { return this.getCollection(CONFIG.KEYS.ACTIVITIES); },
+      saveActivities(activities) { return this.saveCollection(CONFIG.KEYS.ACTIVITIES, activities); },
+
+      clearAll() {
+        Object.values(CONFIG.KEYS).forEach(key => localStorage.removeItem(key));
+      },
+
+      loadSampleData() {
+        const today = new Date().toISOString().split('T')[0];
+        const sampleStudents = [
+          { id: "s1", studentCode: "MGI-001", fullName: "Rahul Verma", phone: "9876543210", email: "rahul@example.com", course: "Web Development", batch: "2026-A", joiningDate: "2026-01-10", status: "Active", courseProgress: 85, photo: null, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+          { id: "s2", studentCode: "MGI-002", fullName: "Ananya Roy", phone: "9876543211", email: "ananya@example.com", course: "Data Science", batch: "2026-B", joiningDate: "2026-02-01", status: "Active", courseProgress: 60, photo: null, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
+        ];
+        const sampleAttendance = [
+          { id: "a1", studentId: "s1", date: today, status: "Present", remarks: "" },
+          { id: "a2", studentId: "s2", date: today, status: "Absent", remarks: "Sick" }
+        ];
+        const sampleTasks = [
+          { id: "t1", studentId: "s1", title: "Build Portfolio", description: "HTML/CSS site", assignedDate: today, dueDate: "2026-12-31", status: "Pending", completedDate: null },
+          { id: "t2", studentId: "s2", title: "Python Basics", description: "Variables", assignedDate: "2026-01-01", dueDate: "2026-01-05", status: "Pending", completedDate: null }
+        ];
+        const sampleActivities = [
+          { id: "act1", studentId: "s1", date: today, type: "Positive", category: "Class Participation", description: "Good answers", points: 15 }
+        ];
+
+        this.saveStudents(sampleStudents);
+        this.saveAttendance(sampleAttendance);
+        this.saveTasks(sampleTasks);
+        this.saveActivities(sampleActivities);
+      }
+    };
+
+    const AnalyticsEngine = {
+      getTodayString() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      },
+
+      calculateStudentAttendance(studentId, attendanceRecords) {
+        const records = attendanceRecords.filter(a => a.studentId === studentId);
+        if (records.length === 0) return { total: 0, present: 0, absent: 0, leave: 0, pct: "N/A" };
+        
+        let present = 0, absent = 0, leave = 0;
+        records.forEach(r => {
+          if (r.status === 'Present') present++;
+          if (r.status === 'Absent') absent++;
+          if (r.status === 'Leave') leave++;
+        });
+        const total = present + absent + leave;
+        const pct = total > 0 ? ((present / total) * 100).toFixed(1) : "N/A";
+        return { total, present, absent, leave, pct: pct !== "N/A" ? parseFloat(pct) : "N/A" };
+      },
+
+      calculateStudentTasks(studentId, taskRecords) {
+        const tasks = taskRecords.filter(t => t.studentId === studentId);
+        if (tasks.length === 0) return { total: 0, completed: 0, pending: 0, inProgress: 0, overdue: 0, pct: "N/A" };
+        
+        const today = this.getTodayString();
+        let completed = 0, pending = 0, inProgress = 0, overdue = 0;
+
+        tasks.forEach(t => {
+          if (t.status === 'Completed') {
+            completed++;
+          } else {
+            if (t.status === 'Pending') pending++;
+            if (t.status === 'In Progress') inProgress++;
+            if (t.dueDate < today) overdue++;
+          }
+        });
+
+        const pct = ((completed / tasks.length) * 100).toFixed(1);
+        return { total: tasks.length, completed, pending, inProgress, overdue, pct: parseFloat(pct) };
+      },
+
+      calculateStudentPoints(studentId, activityRecords) {
+        const activities = activityRecords.filter(a => a.studentId === studentId);
+        let pos = 0, neg = 0;
+        activities.forEach(a => {
+          if (a.type === 'Positive') pos += Number(a.points);
+          if (a.type === 'Negative') neg += Number(a.points);
+        });
+        return { positive: pos, negative: neg, net: pos - neg };
+      },
+
+      getPerformanceRating(attPct, taskPct, overdueCount, netPoints) {
+        const ratings = {};
+        
+        if (attPct === "N/A") ratings.att = { color: 'none', label: 'N/A' };
+        else if (attPct >= 90) ratings.att = { color: 'green', label: 'Green (≥90%)' };
+        else if (attPct >= 75) ratings.att = { color: 'amber', label: 'Amber (75-89.9%)' };
+        else ratings.att = { color: 'red', label: 'Red (<75%)' };
+
+        if (taskPct === "N/A") ratings.task = { color: 'none', label: 'N/A' };
+        else if (taskPct >= 80) ratings.task = { color: 'green', label: 'Green (≥80%)' };
+        else if (taskPct >= 50) ratings.task = { color: 'amber', label: 'Amber (50-79.9%)' };
+        else ratings.task = { color: 'red', label: 'Red (<50%)' };
+
+        if (taskPct === "N/A") ratings.overdue = { color: 'none', label: 'N/A' };
+        else if (overdueCount === 0) ratings.overdue = { color: 'green', label: 'Green (0)' };
+        else if (overdueCount <= 2) ratings.overdue = { color: 'amber', label: 'Amber (1-2)' };
+        else ratings.overdue = { color: 'red', label: 'Red (≥3)' };
+
+        if (netPoints >= 10) ratings.points = { color: 'green', label: 'Green (≥+10)' };
+        else if (netPoints >= 0) ratings.points = { color: 'amber', label: 'Amber (0 to +9)' };
+        else ratings.points = { color: 'red', label: 'Red (<0)' };
+
+        const available = Object.values(ratings).filter(r => r.color !== 'none');
+        let overall = "Not Rated";
+        if (available.length >= 2) {
+          if (available.some(r => r.color === 'red')) overall = "At Risk";
+          else if (available.every(r => r.color === 'green')) overall = "Excellent";
+          else if (available.every(r => r.color === 'amber')) overall = "Needs Improvement";
+          else overall = "Good";
+        }
+
+        return { ratings, overall };
+      }
+    };
+
+    const StudentModule = {
+      processImage(file, callback) {
+        if (file.size > 2 * 1024 * 1024) {
+          alert("Image size exceeds maximum limit of 2MB.");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 256;
+            canvas.height = 256;
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, 256, 256);
+            ctx.drawImage(img, 0, 0, 256, 256);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            callback(dataUrl);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
+
+      deleteStudentCascade(studentId) {
+        let students = StorageModule.getStudents();
+        let attendance = StorageModule.getAttendance();
+        let tasks = StorageModule.getTasks();
+        let activities = StorageModule.getActivities();
+
+        const student = students.find(s => s.id === studentId);
+        if (!student) return;
+
+        const relatedAtt = attendance.filter(a => a.studentId === studentId).length;
+        const relatedTasks = tasks.filter(t => t.studentId === studentId).length;
+        const relatedAct = activities.filter(a => a.studentId === studentId).length;
+
+        const confirmMsg = `Delete ${student.fullName} (${student.studentCode})?\n\nThis will also delete:\n- ${relatedAtt} Attendance records\n- ${relatedTasks} Tasks\n- ${relatedAct} Activities\n\nThis action cannot be undone.`;
+
+        if (confirm(confirmMsg)) {
+          students = students.filter(s => s.id !== studentId);
+          attendance = attendance.filter(a => a.studentId !== studentId);
+          tasks = tasks.filter(t => t.studentId !== studentId);
+          activities = activities.filter(a => a.studentId !== studentId);
+
+          StorageModule.saveStudents(students);
+          StorageModule.saveAttendance(attendance);
+          StorageModule.saveTasks(tasks);
+          StorageModule.saveActivities(activities);
+          
+          App.refreshAll();
+        }
+      }
+    };
+
+    const App = {
+      currentImageData: null,
+
+      init() {
+        this.bindNavigation();
+        this.populateDropdowns();
+        this.bindStudentForm();
+        this.bindAttendanceSheet();
+        this.bindTaskForm();
+        this.bindActivityForm();
+        this.bindFiltersAndSearch();
+        this.bindReports();
+        this.bindDataControls();
+        this.refreshAll();
+      },
+
+      showAlert(msg, type = "success") {
+        const container = document.getElementById('alert-container');
+        container.innerHTML = `<div class="alert ${type}">${msg}</div>`;
+        setTimeout(() => container.innerHTML = '', 3000);
+      },
+
+      bindNavigation() {
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            
+            btn.classList.add('active');
+            const pageId = btn.dataset.page;
+            document.getElementById(`page-${pageId}`).classList.add('active');
+            document.getElementById('page-title').textContent = btn.textContent;
+          });
+        });
+
+        document.getElementById('toggle-sidebar').addEventListener('click', () => {
+          document.getElementById('sidebar').classList.toggle('show');
+        });
+      },
+
+      populateDropdowns() {
+        const courseSelects = [document.getElementById('stu-course'), document.getElementById('filter-course')];
+        courseSelects.forEach(sel => {
+          sel.innerHTML = '<option value="">All Courses</option>';
+          CONFIG.COURSES.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c; opt.textContent = c;
+            sel.appendChild(opt);
+          });
+        });
+
+        const actCat = document.getElementById('act-category');
+        const updateCategories = () => {
+          actCat.innerHTML = '';
+          const type = document.getElementById('act-type').value;
+          const cats = type === 'Positive' ? CONFIG.POSITIVE_CATEGORIES : CONFIG.NEGATIVE_CATEGORIES;
+          cats.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c; opt.textContent = c;
+            actCat.appendChild(opt);
+          });
+        };
+        document.getElementById('act-type').addEventListener('change', updateCategories);
+        updateCategories();
+      },
+
+      refreshAll() {
+        this.renderDashboard();
+        this.renderStudentsTable();
+        this.updateStudentDropdowns();
+        this.renderAttendanceSheet();
+        this.renderTasksTable();
+        this.renderActivitiesTable();
+        this.renderAnalysisPage();
+        this.renderReportPage();
+      },
+
+      renderDashboard() {
+        const students = StorageModule.getStudents();
+        const attendance = StorageModule.getAttendance();
+        const tasks = StorageModule.getTasks();
+        const activities = StorageModule.getActivities();
+        const today = AnalyticsEngine.getTodayString();
+
+        document.getElementById('kpi-total-students').textContent = students.length;
+        document.getElementById('kpi-active-students').textContent = students.filter(s => s.status === 'Active').length;
+
+        const todayAtt = attendance.filter(a => a.date === today);
+        const presentCount = todayAtt.filter(a => a.status === 'Present').length;
+        const attRate = todayAtt.length > 0 ? ((presentCount / todayAtt.length) * 100).toFixed(1) + '%' : 'N/A';
+        document.getElementById('kpi-today-att').textContent = attRate;
+
+        const completedTasks = tasks.filter(t => t.status === 'Completed').length;
+        const taskRate = tasks.length > 0 ? ((completedTasks / tasks.length) * 100).toFixed(1) + '%' : 'N/A';
+        document.getElementById('kpi-task-rate').textContent = taskRate;
+
+        let netPoints = 0;
+        activities.forEach(a => {
+          netPoints += (a.type === 'Positive' ? Number(a.points) : -Number(a.points));
+        });
+        document.getElementById('kpi-net-points').textContent = netPoints;
+
+        this.renderCSSBars('attendance-breakdown', [
+          { label: 'Present', val: presentCount },
+          { label: 'Absent', val: todayAtt.filter(a => a.status === 'Absent').length },
+          { label: 'Leave', val: todayAtt.filter(a => a.status === 'Leave').length }
+        ]);
+
+        const courseCounts = CONFIG.COURSES.map(c => ({
+          label: c, val: students.filter(s => s.course === c).length
+        }));
+        this.renderCSSBars('course-distribution', courseCounts);
+
+        this.renderCSSBars('task-distribution', [
+          { label: 'Completed', val: completedTasks },
+          { label: 'Pending', val: tasks.filter(t => t.status === 'Pending').length },
+          { label: 'In Progress', val: tasks.filter(t => t.status === 'In Progress').length }
+        ]);
+      },
+
+      renderCSSBars(containerId, items) {
+        const container = document.getElementById(containerId);
+        const max = Math.max(...items.map(i => i.val), 1);
+        container.innerHTML = items.map(i => `
+          <div style="margin-bottom: 0.5rem;">
+            <div style="display:flex; justify-content:space-between; font-size: 0.8rem;">
+              <span>${i.label}</span><span>${i.val}</span>
+            </div>
+            <div class="bar-container">
+              <div class="bar-fill" style="width: ${(i.val / max) * 100}%;"></div>
+            </div>
+          </div>
+        `).join('');
+      },
+
+      renderStudentsTable() {
+        const students = StorageModule.getStudents();
+        const search = document.getElementById('student-search').value.toLowerCase();
+        const course = document.getElementById('filter-course').value;
+        const status = document.getElementById('filter-status').value;
+
+        const filtered = students.filter(s => {
+          const matchSearch = s.fullName.toLowerCase().includes(search) || s.studentCode.toLowerCase().includes(search);
+          const matchCourse = !course || s.course === course;
+          const matchStatus = !status || s.status === status;
+          return matchSearch && matchCourse && matchStatus;
+        });
+
+        const tbody = document.getElementById('students-table-body');
+        tbody.innerHTML = filtered.map(s => `
+          <tr>
+            <td>${s.photo ? `<img src="${s.photo}" class="avatar">` : `<div class="avatar-placeholder">${s.fullName.charAt(0)}</div>`}</td>
+            <td>${s.studentCode}</td>
+            <td>${s.fullName}</td>
+            <td>${s.course}</td>
+            <td>${s.batch}</td>
+            <td><span class="badge ${s.status === 'Active' ? 'green' : 'amber'}">${s.status}</span></td>
+            <td>
+              <button class="btn secondary btn-sm" onclick="App.editStudent('${s.id}')">Edit</button>
+              <button class="btn danger btn-sm" onclick="StudentModule.deleteStudentCascade('${s.id}')">Delete</button>
+            </td>
+          </tr>
+        `).join('');
+      },
+
+      bindStudentForm() {
+        const modal = document.getElementById('student-modal');
+        document.getElementById('btn-open-student-modal').onclick = () => {
+          document.getElementById('form-student').reset();
+          document.getElementById('student-internal-id').value = '';
+          document.getElementById('photo-preview-container').innerHTML = '';
+          this.currentImageData = null;
+          document.getElementById('modal-title').textContent = "Add Student";
+          modal.style.display = 'flex';
+        };
+
+        document.querySelector('.close-modal').onclick = () => modal.style.display = 'none';
+
+        document.getElementById('stu-photo').addEventListener('change', (e) => {
+          if (e.target.files[0]) {
+            StudentModule.processImage(e.target.files[0], (dataUrl) => {
+              this.currentImageData = dataUrl;
+              document.getElementById('photo-preview-container').innerHTML = `<img src="${dataUrl}" class="avatar">`;
+            });
+          }
+        });
+
+        document.getElementById('form-student').onsubmit = (e) => {
+          e.preventDefault();
+          const internalId = document.getElementById('student-internal-id').value;
+          const code = document.getElementById('stu-code').value.trim();
+          let students = StorageModule.getStudents();
+
+          const isDup = students.some(s => s.studentCode.toLowerCase() === code.toLowerCase() && s.id !== internalId);
+          if (isDup) {
+            document.getElementById('err-stu-code').textContent = "Student ID already exists!";
+            return;
+          }
+
+          const studentObj = {
+            id: internalId || crypto.randomUUID(),
+            studentCode: code,
+            fullName: document.getElementById('stu-name').value.trim(),
+            phone: document.getElementById('stu-phone').value.trim(),
+            email: document.getElementById('stu-email').value.trim(),
+            course: document.getElementById('stu-course').value,
+            batch: document.getElementById('stu-batch').value.trim(),
+            joiningDate: document.getElementById('stu-join').value,
+            status: document.getElementById('stu-status').value,
+            courseProgress: 0,
+            photo: this.currentImageData || (internalId ? (students.find(s => s.id === internalId)?.photo || null) : null),
+            createdAt: internalId ? (students.find(s => s.id === internalId)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+
+          if (internalId) {
+            students = students.map(s => s.id === internalId ? studentObj : s);
+          } else {
+            students.push(studentObj);
+          }
+
+          StorageModule.saveStudents(students);
+          modal.style.display = 'none';
+          this.showAlert("Student saved successfully!");
+          this.refreshAll();
+        };
+      },
+
+      editStudent(id) {
+        const s = StorageModule.getStudents().find(st => st.id === id);
+        if (!s) return;
+        document.getElementById('student-internal-id').value = s.id;
+        document.getElementById('stu-code').value = s.studentCode;
+        document.getElementById('stu-name').value = s.fullName;
+        document.getElementById('stu-phone').value = s.phone;
+        document.getElementById('stu-email').value = s.email;
+        document.getElementById('stu-course').value = s.course;
+        document.getElementById('stu-batch').value = s.batch;
+        document.getElementById('stu-join').value = s.joiningDate;
+        document.getElementById('stu-status').value = s.status;
+        this.currentImageData = s.photo;
+        if (s.photo) {
+          document.getElementById('photo-preview-container').innerHTML = `<img src="${s.photo}" class="avatar">`;
+        }
+        document.getElementById('modal-title').textContent = "Edit Student";
+        document.getElementById('student-modal').style.display = 'flex';
+      },
+
+      updateStudentDropdowns() {
+        const activeStudents = StorageModule.getStudents().filter(s => s.status === 'Active');
+        const selects = [document.getElementById('task-student'), document.getElementById('act-student'), document.getElementById('analysis-student-select')];
+        selects.forEach(sel => {
+          sel.innerHTML = activeStudents.map(s => `<option value="${s.id}">${s.fullName} (${s.studentCode})</option>`).join('');
+        });
+      },
+
+      bindAttendanceSheet() {
+        const dateInput = document.getElementById('att-date');
+        dateInput.value = AnalyticsEngine.getTodayString();
+        dateInput.addEventListener('change', () => this.renderAttendanceSheet());
+
+        document.getElementById('btn-mark-all-present').onclick = () => {
+          document.querySelectorAll('.att-status-select').forEach(s => s.value = 'Present');
+        };
+
+        document.getElementById('btn-save-attendance').onclick = () => {
+          const selectedDate = dateInput.value;
+          let attendance = StorageModule.getAttendance();
+          attendance = attendance.filter(a => a.date !== selectedDate);
+
+          document.querySelectorAll('#attendance-sheet-body tr').forEach(tr => {
+            const studentId = tr.dataset.id;
+            const status = tr.querySelector('.att-status-select').value;
+            const remarks = tr.querySelector('.att-remark-input').value.trim();
+
+            attendance.push({
+              id: crypto.randomUUID(),
+              studentId,
+              date: selectedDate,
+              status,
+              remarks
+            });
+          });
+
+          StorageModule.saveAttendance(attendance);
+          this.showAlert("Attendance recorded successfully!");
+          this.refreshAll();
+        };
+      },
+
+      renderAttendanceSheet() {
+        const selectedDate = document.getElementById('att-date').value;
+        const activeStudents = StorageModule.getStudents().filter(s => s.status === 'Active');
+        const attendance = StorageModule.getAttendance().filter(a => a.date === selectedDate);
+
+        const tbody = document.getElementById('attendance-sheet-body');
+        tbody.innerHTML = activeStudents.map(s => {
+          const existing = attendance.find(a => a.studentId === s.id);
+          const currentStatus = existing ? existing.status : 'Present';
+          const currentRemark = existing ? existing.remarks : '';
+
+          return `
+            <tr data-id="${s.id}">
+              <td>${s.studentCode}</td>
+              <td>${s.fullName}</td>
+              <td>
+                <select class="att-status-select">
+                  <option value="Present" ${currentStatus === 'Present' ? 'selected' : ''}>Present</option>
+                  <option value="Absent" ${currentStatus === 'Absent' ? 'selected' : ''}>Absent</option>
+                  <option value="Leave" ${currentStatus === 'Leave' ? 'selected' : ''}>Leave</option>
+                </select>
+              </td>
+              <td><input type="text" class="att-remark-input" value="${currentRemark}" placeholder="Remark..."></td>
+            </tr>
+          `;
+        }).join('');
+      },
+
+      bindTaskForm() {
+        document.getElementById('task-due').value = AnalyticsEngine.getTodayString();
+        document.getElementById('form-task').onsubmit = (e) => {
+          e.preventDefault();
+          const tasks = StorageModule.getTasks();
+          tasks.push({
+            id: crypto.randomUUID(),
+            studentId: document.getElementById('task-student').value,
+            title: document.getElementById('task-title').value.trim(),
+            description: document.getElementById('task-desc').value.trim(),
+            assignedDate: AnalyticsEngine.getTodayString(),
+            dueDate: document.getElementById('task-due').value,
+            status: 'Pending',
+            completedDate: null
+          });
+          StorageModule.saveTasks(tasks);
+          this.showAlert("Task assigned!");
+          document.getElementById('form-task').reset();
+          this.refreshAll();
+        };
+      },
+
+      renderTasksTable() {
+        const tasks = StorageModule.getTasks();
+        const students = StorageModule.getStudents();
+        const today = AnalyticsEngine.getTodayString();
+
+        const tbody = document.getElementById('tasks-table-body');
+        tbody.innerHTML = tasks.map(t => {
+          const student = students.find(s => s.id === t.studentId);
+          const isOverdue = t.status !== 'Completed' && t.dueDate < today;
+
+          return `
+            <tr>
+              <td>${student ? student.fullName : 'Unknown'}</td>
+              <td>${t.title} ${isOverdue ? '<span class="badge red">Overdue</span>' : ''}</td>
+              <td>${t.dueDate}</td>
+              <td>
+                <select onchange="App.updateTaskStatus('${t.id}', this.value)">
+                  <option value="Pending" ${t.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                  <option value="In Progress" ${t.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                  <option value="Completed" ${t.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                </select>
+              </td>
+              <td><button class="btn danger btn-sm" onclick="App.deleteTask('${t.id}')">Delete</button></td>
+            </tr>
+          `;
+        }).join('');
+      },
+
+      updateTaskStatus(taskId, status) {
+        let tasks = StorageModule.getTasks();
+        tasks = tasks.map(t => {
+          if (t.id === taskId) {
+            t.status = status;
+            t.completedDate = status === 'Completed' ? AnalyticsEngine.getTodayString() : null;
+          }
+          return t;
+        });
+        StorageModule.saveTasks(tasks);
+        this.refreshAll();
+      },
+
+      deleteTask(taskId) {
+        if (confirm("Delete this task?")) {
+          const tasks = StorageModule.getTasks().filter(t => t.id !== taskId);
+          StorageModule.saveTasks(tasks);
+          this.refreshAll();
+        }
+      },
+
+      bindActivityForm() {
+        document.getElementById('form-activity').onsubmit = (e) => {
+          e.preventDefault();
+          const activities = StorageModule.getActivities();
+          activities.push({
+            id: crypto.randomUUID(),
+            studentId: document.getElementById('act-student').value,
+            date: AnalyticsEngine.getTodayString(),
+            type: document.getElementById('act-type').value,
+            category: document.getElementById('act-category').value,
+            points: Number(document.getElementById('act-points').value),
+            description: document.getElementById('act-desc').value.trim()
+          });
+          StorageModule.saveActivities(activities);
+          this.showAlert("Activity logged!");
+          document.getElementById('form-activity').reset();
+          this.refreshAll();
+        };
+      },
+
+      renderActivitiesTable() {
+        const activities = StorageModule.getActivities();
+        const students = StorageModule.getStudents();
+
+        const tbody = document.getElementById('activities-table-body');
+        tbody.innerHTML = activities.map(a => {
+          const student = students.find(s => s.id === a.studentId);
+          const sign = a.type === 'Positive' ? '+' : '-';
+          const color = a.type === 'Positive' ? 'green' : 'red';
+
+          return `
+            <tr>
+              <td>${student ? student.fullName : 'Unknown'}</td>
+              <td><span class="badge ${color}">${a.type}</span></td>
+              <td>${a.category}</td>
+              <td><strong>${sign}${a.points}</strong></td>
+              <td>${a.description}</td>
+            </tr>
+          `;
+        }).join('');
+      },
+
+      renderAnalysisPage() {
+        const studentId = document.getElementById('analysis-student-select').value;
+        const container = document.getElementById('analysis-results');
+        if (!studentId) {
+          container.innerHTML = `<p>No active student selected.</p>`;
+          return;
+        }
+
+        const attendance = StorageModule.getAttendance();
+        const tasks = StorageModule.getTasks();
+        const activities = StorageModule.getActivities();
+
+        const attMetrics = AnalyticsEngine.calculateStudentAttendance(studentId, attendance);
+        const taskMetrics = AnalyticsEngine.calculateStudentTasks(studentId, tasks);
+        const pointMetrics = AnalyticsEngine.calculateStudentPoints(studentId, activities);
+
+        const evalResult = AnalyticsEngine.getPerformanceRating(
+          attMetrics.pct, taskMetrics.pct, taskMetrics.overdue, pointMetrics.net
+        );
+
+        container.innerHTML = `
+          <h4>Overall Performance Status: <span class="badge ${evalResult.overall === 'At Risk' ? 'red' : 'green'}">${evalResult.overall}</span></h4>
+          <div class="kpi-grid mt-1">
+            <div class="kpi-card">
+              <h4>Attendance</h4>
+              <p>${attMetrics.pct}${attMetrics.pct !== 'N/A' ? '%' : ''}</p>
+              <small>Rating: ${evalResult.ratings.att.label}</small>
+            </div>
+            <div class="kpi-card">
+              <h4>Task Rate</h4>
+              <p>${taskMetrics.pct}${taskMetrics.pct !== 'N/A' ? '%' : ''}</p>
+              <small>Rating: ${evalResult.ratings.task.label}</small>
+            </div>
+            <div class="kpi-card">
+              <h4>Overdue Tasks</h4>
+              <p>${taskMetrics.overdue}</p>
+              <small>Rating: ${evalResult.ratings.overdue.label}</small>
+            </div>
+            <div class="kpi-card">
+              <h4>Net Points</h4>
+              <p>${pointMetrics.net}</p>
+              <small>Rating: ${evalResult.ratings.points.label}</small>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('analysis-student-select').onchange = () => this.renderAnalysisPage();
+      },
+
+      bindReports() {
+        document.getElementById('btn-print-report').onclick = () => window.print();
+        document.getElementById('btn-export-csv').onclick = () => {
+          const students = StorageModule.getStudents();
+          let csv = "ID,StudentCode,FullName,Course,Batch,Status\n";
+          students.forEach(s => {
+            csv += `"${s.id}","${s.studentCode}","${s.fullName}","${s.course}","${s.batch}","${s.status}"\n`;
+          });
+          const blob = new Blob([csv], { type: 'text/csv' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.setAttribute('href', url);
+          a.setAttribute('download', `students_export_${AnalyticsEngine.getTodayString()}.csv`);
+          a.click();
+        };
+      },
+
+      renderReportPage() {
+        document.getElementById('report-date').textContent = new Date().toLocaleString();
+        const students = StorageModule.getStudents();
+        const attendance = StorageModule.getAttendance();
+        const tasks = StorageModule.getTasks();
+        const activities = StorageModule.getActivities();
+
+        const reportContent = document.getElementById('report-content');
+        reportContent.innerHTML = `
+          <h3>Institute Metrics</h3>
+          <p>Total Registered Students: <strong>${students.length}</strong></p>
+          <p>Total Recorded Attendance Days: <strong>${attendance.length}</strong></p>
+          <p>Total Tasks Assigned: <strong>${tasks.length}</strong></p>
+          <p>Total Activities Logged: <strong>${activities.length}</strong></p>
+          
+          <h3 style="margin-top: 1.5rem;">Student Roster</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Course</th><th>Batch</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              ${students.map(s => `<tr><td>${s.studentCode}</td><td>${s.fullName}</td><td>${s.course}</td><td>${s.batch}</td><td>${s.status}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        `;
+      },
+
+      bindFiltersAndSearch() {
+        ['student-search', 'filter-course', 'filter-status'].forEach(id => {
+          document.getElementById(id).addEventListener('input', () => this.renderStudentsTable());
+        });
+        document.getElementById('btn-clear-filters').onclick = () => {
+          document.getElementById('student-search').value = '';
+          document.getElementById('filter-course').value = '';
+          document.getElementById('filter-status').value = '';
+          this.renderStudentsTable();
+        };
+      },
+
+      bindDataControls() {
+        document.getElementById('btn-load-sample').onclick = () => {
+          if (confirm("Load sample data? Existing records will remain.")) {
+            StorageModule.loadSampleData();
+            this.refreshAll();
+            this.showAlert("Sample data loaded successfully!");
+          }
+        };
+
+        document.getElementById('btn-clear-data').onclick = () => {
+          if (confirm("Are you sure you want to clear ALL data? This action cannot be undone!")) {
+            StorageModule.clearAll();
+            this.refreshAll();
+            this.showAlert("All data cleared!", "error");
+          }
+        };
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => App.init());
+  </script>
+</body>
+</html>

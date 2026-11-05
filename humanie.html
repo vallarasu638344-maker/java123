@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payroll Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            background: #f3f6fc;
+            color: #101d3a;
+        }
+
+        .dashboard {
+            width: 100%;
+            min-width: 1000px;
+            background: white;
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+      
+
+        .sidebar {
+            width: 230px;
+            padding: 25px 15px;
+            border-right: 1px solid #e3eaf5;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .logo i {
+            color: #3776ff;
+            margin-right: 8px;
+        }
+
+        .company {
+            border: 1px solid #dce5f4;
+            padding: 13px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .menu-title {
+            color: #7b8eae;
+            font-size: 11px;
+            margin: 23px 0 12px;
+        }
+
+        .menu {
+            padding: 12px 10px;
+            margin-bottom: 4px;
+            border-radius: 7px;
+            color: #657b9f;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .menu i {
+            width: 25px;
+        }
+
+        .menu.active {
+            background: #e9efff;
+            color: #2868ff;
+        }
+
+        .premium {
+            background: #f5f8ff;
+            border: 1px solid #e0e8f7;
+            border-radius: 9px;
+            padding: 13px;
+            margin-top: 25px;
+        }
+
+        .premium i {
+            color: #3776ff;
+        }
+
+        .premium h4 {
+            font-size: 13px;
+            margin: 10px 0;
+        }
+
+        .premium p {
+            color: #7b8eae;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .premium button {
+            width: 100%;
+            background: #3776ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+       
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 23px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e5eaf3;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .top-links {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            color: #7586a6;
+        }
+
+        .top-links .selected {
+            color: #2868ff;
+            border-bottom: 2px solid #3776ff;
+            padding-bottom: 22px;
+            margin-bottom: -22px;
+        }
+
+        .profile {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .profile i {
+            color: #647b9e;
+            margin-right: 8px;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .heading h2 {
+            font-size: 22px;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .heading-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .heading button {
+            background: white;
+            border: 1px solid #dce5f4;
+            padding: 10px;
+            border-radius: 7px;
+            color: #25395c;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .heading button.blue {
+            background: #3776ff;
+            color: white;
+            border: none;
+        }
+
+      
+
+        .alert {
+            background: #f3f7ff;
+            border: 1px solid #dbe6ff;
+            border-radius: 9px;
+            padding: 14px;
+            font-size: 11px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .alert i {
+            color: #3776ff;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            border: 1px solid #dfe7f4;
+            border-radius: 10px;
+            padding: 20px;
+            background: white;
+        }
+
+        .card-title {
+            color: #7185a8;
+            font-size: 12px;
+            margin-bottom: 15px;
+            white-space: nowrap;
+        }
+
+        .card-title i {
+            margin-right: 7px;
+        }
+
+        .card h1 {
+            font-size: 30px;
+            margin: 0 0 10px;
+        }
+
+        .growth {
+            color: #08b878;
+            font-size: 11px;
+        }
+
+        .growth span {
+            color: #7b8eae;
+        }
+
+     
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1fr 1.08fr;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .chart-card {
+            border: 1px solid #dfe7f4;
+            border-radius: 10px;
+            padding: 18px;
+            min-width: 0;
+        }
+
+        .chart-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .chart-heading h3 {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .chart-heading select {
+            border: 1px solid #dce5f4;
+            border-radius: 6px;
+            padding: 7px;
+            color: #7185a8;
+            font-size: 10px;
+        }
+
+      
+
+        .line-chart {
+            height: 190px;
+            position: relative;
+            padding-bottom: 25px;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0,
+                transparent 37px,
+                #e9eef7 38px
+            );
+        }
+
+        .line-chart svg {
+            width: 100%;
+            height: 155px;
+            overflow: visible;
+        }
+
+        .months {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            color: #7185a8;
+            font-size: 11px;
+        }
+
+        .months .dec {
+            color: #3776ff;
+            font-weight: bold;
+        }
+
+        .tooltip {
+            position: absolute;
+            left: 34%;
+            top: -12px;
+            background: #101a30;
+            color: white;
+            padding: 9px 12px;
+            font-size: 11px;
+            border-radius: 6px;
+            text-align: center;
+            line-height: 1.6;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+       
+        .bar-chart {
+            height: 190px;
+            display: flex;
+            padding-bottom: 25px;
+            position: relative;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0,
+                transparent 37px,
+                #e9eef7 38px
+            );
+        }
+
+        .bars {
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            border-bottom: 1px solid #dfe7f4;
+        }
+
+        .bar-item {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            width: 13%;
+            position: relative;
+        }
+
+        .bar {
+            width: 28px;
+            max-width: 100%;
+            background: #3974ff;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+        }
+
+        .bar::before {
+            content: "";
+            position: absolute;
+            background: #dce6ff;
+            height: 12px;
+            top: -12px;
+            left: 0;
+            right: 0;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -23px;
+            font-size: 9px;
+            color: #7185a8;
+            white-space: nowrap;
+        }
+
+
+        .payroll-list {
+            border: 1px solid #dfe7f4;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .table-heading h3 {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 7px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 125px;
+            padding: 8px;
+            border: 1px solid #dce5f4;
+            border-radius: 6px;
+            color: #7185a8;
+            background: white;
+            font-size: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 10px;
+        }
+
+        th {
+            background: #f7f9fd;
+            color: #7185a8;
+            font-weight: normal;
+        }
+
+        th, td {
+            padding: 13px 8px;
+            border-bottom: 1px solid #edf1f8;
+            white-space: nowrap;
+        }
+
+        .paid {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 5px 9px;
+            border-radius: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <div class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-snowflake"></i>Humaine
+        </div>
+
+        <div class="company">
+            <i class="fa-solid fa-building"></i>
+            Lead Inc. <i class="fa-solid fa-angle-down" style="float:right"></i>
+        </div>
+
+        <div class="menu-title">MAIN MENU</div>
+
+        <div class="menu"><i class="fa-solid fa-house"></i>Dashboard</div>
+        <div class="menu"><i class="fa-solid fa-users"></i>Employee Directory</div>
+        <div class="menu"><i class="fa-solid fa-calendar-days"></i>Attendance & Leave</div>
+        <div class="menu"><i class="fa-solid fa-user-plus"></i>Recruitment</div>
+        <div class="menu active"><i class="fa-solid fa-circle-dollar-to-slot"></i>Payroll</div>
+        <div class="menu"><i class="fa-solid fa-chart-column"></i>Performance</div>
+        <div class="menu"><i class="fa-solid fa-chart-line"></i>Reports & Analytics</div>
+
+        <div class="menu-title">OTHER</div>
+
+        <div class="menu"><i class="fa-solid fa-gear"></i>Settings</div>
+        <div class="menu"><i class="fa-solid fa-circle-question"></i>Help Center</div>
+
+        <div class="premium">
+            <i class="fa-solid fa-crown"></i>
+            <h4>Upgrade to Premium Plan</h4>
+            <p>Unlock advanced HR analytics, priority support, and exclusive features.</p>
+            <button>Upgrade Now</button>
+        </div>
+
+    </div>
+
+    <div class="main">
+
+        <div class="topbar">
+
+            <div class="top-links">
+                <span class="selected">Overview</span>
+                <span>Employee List</span>
+                <span>Organization Chart</span>
+                <span>Employee Profiles</span>
+            </div>
+
+            <div class="profile">
+                <i class="fa-solid fa-bell"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-child-dress"></i>Rani Malek ⌄
+            </div>
+
+        </div>
+
+        <div class="heading">
+
+            <h2>Payroll Overview</h2>
+
+            <div class="heading-buttons">
+                <button><i class="fa-solid fa-calendar-days"></i> 27 Feb - 27 Mar 2025</button>
+                <button><i class="fa-solid fa-download"></i> Export Payroll</button>
+                <button class="blue"><i class="fa-solid fa-plus"></i> Add New Payroll</button>
+            </div>
+
+        </div>
+
+        <div class="alert">
+            <i class="fa-solid fa-circle-info"></i>
+            <b>Heads up!</b> Payroll is due in 3 days. Please ensure all employees data,
+            attendance logs, and bonuses are finalized before April 27, 2025 to avoid delays in payment processing.
+        </div>
+
+        <div class="summary">
+
+            <div class="card">
+                <div class="card-title">
+                    <i class="fa-solid fa-coins"></i>Total Payroll This Month
+                </div>
+                <h1>$273,500</h1>
+                <div class="growth">↑ 8.2% <span>from last month</span></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <i class="fa-solid fa-users"></i>Total Employees Paid
+                </div>
+                <h1>134</h1>
+                <div class="growth">↑ 3.1% <span>from last month</span></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <i class="fa-solid fa-wallet"></i>Average Salary
+                </div>
+                <h1>$3,632</h1>
+                <div class="growth">↑ 9.4% <span>from last month</span></div>
+            </div>
+
+        </div>
+
+        <div class="charts">
+
+            <div class="chart-card">
+
+                <div class="chart-heading">
+                    <h3>Monthly Payroll Trend</h3>
+                    <select>
+                        <option>Last 6 months</option>
+                    </select>
+                </div>
+
+                <div class="line-chart">
+
+                    <div class="tooltip">
+                        <b>$340,300</b><br>
+                        -2.6% from previous month 
+                    </div>
+
+                    <svg viewBox="0 0 500 155" preserveAspectRatio="none">
+
+                        <polyline
+                            points="0,95 75,70 150,75 225,55 300,85 375,100 450,88"
+                            fill="none"
+                            stroke="#3776ff"
+                            stroke-width="2.5"
+                        />
+
+                        <circle cx="0" cy="95" r="4" fill="#3776ff"/>
+                        <circle cx="75" cy="70" r="4" fill="#3776ff"/>
+                        <circle cx="150" cy="75" r="4" fill="#3776ff"/>
+                        <circle cx="225" cy="55" r="4" fill="#3776ff"/>
+                        <circle cx="300" cy="85" r="4" fill="#3776ff"/>
+                        <circle cx="375" cy="100" r="4" fill="#3776ff"/>
+                        <circle cx="450" cy="88" r="4" fill="#3776ff"/>
+
+                    </svg>
+
+                    <div class="months">
+                        <span>Oct</span>
+                        <span>Nov</span>
+                        <span class="dec">Dec</span>
+                        <span>Jan</span>
+                        <span>Feb</span>
+                        <span>Mar</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-card">
+
+                <div class="chart-heading">
+                    <h3>Payroll Distribution by Department</h3>
+                    <span style="font-size:10px;color:#7185a8">
+                        <i class="fa-solid fa-circle" style="color:#3776ff"></i> Salary
+                        <i class="fa-solid fa-circle" style="color:#dce6ff"></i> Bonus
+                    </span>
+                </div>
+
+                <div class="bar-chart">
+
+                    <div class="bars">
+
+                        <div class="bar-item">
+                            <div class="bar" style="height:75%">
+                                <span class="bar-label">IT</span>
+                            </div>
+                        </div>
+
+                        <div class="bar-item">
+                            <div class="bar" style="height:65%">
+                                <span class="bar-label">Marketing</span>
+                            </div>
+                        </div>
+
+                        <div class="bar-item">
+                            <div class="bar" style="height:68%">
+                                <span class="bar-label">Finance</span>
+                            </div>
+                        </div>
+
+                        <div class="bar-item">
+                            <div class="bar" style="height:50%">
+                                <span class="bar-label">Operations</span>
+                            </div>
+                        </div>
+
+                        <div class="bar-item">
+                            <div class="bar" style="height:75%">
+                                <span class="bar-label">HR</span>
+                            </div>
+                        </div>
+
+                        <div class="bar-item">
+                            <div class="bar" style="height:60%">
+                                <span class="bar-label">Others</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="payroll-list">
+
+            <div class="table-heading">
+                <h3>Payroll List</h3>
+
+                <div class="filters">
+                    <input type="text" placeholder="Search employee...">
+
+                    <select>
+                        <option>Select Department</option>
+                        <option>Marketing</option>
+                        <option>Finance</option>
+                        <option>IT</option>
+                    </select>
+
+                    <select>
+                        <option>Status</option>
+                        <option>Paid</option>
+                        <option>Pending</option>
+                    </select>
+                </div>
+            </div>
+
+            <table>
+
+                <tr>
+                    <th>Name ↕</th>
+                    <th>Department ↕</th>
+                    <th>Pay Date</th>
+                    <th>Status ↕</th>
+                    <th>Basic Salary</th>
+                    <th>Bonuses ↕</th>
+                    <th>Total Salary ↕</th>
+                    <th>Actions</th>
+                </tr>
+
+                <tr>
+                    <td><i class="fa-solid fa-person"></i> John Doe</td>
+                    <td>Marketing</td>
+                    <td>Mar 31, 2025</td>
+                    <td><span class="paid">Paid</span></td>
+                    <td>$4,000</td>
+                    <td>$500</td>
+                    <td><b>$4,500</b></td>
+                    <td>⋮</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

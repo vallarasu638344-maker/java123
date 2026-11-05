@@ -82,8 +82,8 @@
     <div class="container" id="product-list"></div>
 
     <script>
-      fetch("products.json")
-        .then((response) => response.json())
+      fetch("products.json") // what url  promise fetch panum
+        .then((response) => response.json()) //resposne .json data mattum vangi kudukum
         .then((data) => {
           let output = "";
           for (let i = 0; i < data.products.length; i++) {
