@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> fruits Billing Statement</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .statement-card {
+      background: #ffffff;
+      width: 80%;
+      max-width: 600px;
+      border: 3px solid #002B49;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .banner {
+      background-color: #FFC000;
+      color: #000;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .company-details h3, .bill-to h3 {
+      color: #000;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .statement-details {
+      text-align: right;
+    }
+
+    .statement-details table {
+      margin-left: auto;
+      border-collapse: collapse;
+    }
+
+    .statement-details td {
+      padding: 2px 5px;
+    }
+
+    .statement-details td.label {
+      font-weight: bold;
+    }
+
+    .bill-to {
+      margin-bottom: 20px;
+      font-size: 13px;
+      line-height: 1.5;
+      border-bottom: 1px solid #FFC000;
+      padding-bottom: 10px;
+      width: 50%;
+    }
+
+    
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .items-table th {
+      background-color: #002B49;
+      color: #ffffff;
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    .items-table th.center, .items-table td.center {
+      text-align: center;
+    }
+
+    .items-table th.right, .items-table td.right {
+      text-align: right;
+    }
+
+    .items-table td {
+      border-bottom: 1px solid #e0e0e0;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: #333;
+    }
+
+   
+    .qty-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .qty-btn {
+      background-color: #002B49;
+      color: white;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .qty-btn:hover {
+      background-color: #004080;
+    }
+
+    .qty-input {
+      width: 35px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 2px;
+      font-size: 13px;
+    }
+
+   
+    .summary-section {
+      width: 50%;
+      margin-left: auto;
+      margin-bottom: 30px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 10px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .summary-row.total-row {
+      background-color: #FFC000;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 5px;
+      padding: 6px 10px;
+    }
+
+   
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+   
+  </style>
+</head>
+<body>
+
+  <div class="statement-card">
+    <div class="banner"> Fruits Billing Statement</div>
+
+   
+    <div class="header-section">
+      <div class="company-details">
+        <h3>Maduraifruitsshop</h3>
+        <p>123, madurai Market</p>
+        <p>mattuthavani, Road 12345</p>
+        <p>Madurai@fruitsshop.com</p>
+      </div>
+      <div class="statement-details">
+        <table>
+          <tr>
+            <td class="label">Statement #:</td>
+            <td>INV-2024-00123</td>
+          </tr>
+          <tr>
+            <td class="label">Date:</td>
+            <td>2026-11-06</td>
+          </tr>
+          <tr>
+            <td class="label">Due Date:</td>
+            <td>2025-10-15</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+   
+    <div class="bill-to">
+      <p style="color: #666; font-size: 12px; margin-bottom: 2px;">Bill To</p>
+      <h3>Mithran </h3>
+      <p>Chennai fruitsshop</p>
+      <p>velachery Bus stop</p>
+      <p>PVR Mall Near...12345</p>
+    </div>
+
+   
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th class="center" style="width: 120px;">Quantity</th>
+          <th class="right">Unit Price</th>
+          <th class="right">Total</th>
+        </tr>
+      </thead>
+      <tbody id="itemsBody">
+        <tr data-price="150.00">
+          <td style="color: red;">Apple</td>
+          <td class="center">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+              <input type="number" class="qty-input" value="1" min="0" onchange="calculateTotals()">
+              <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+            </div>
+          </td>
+          <td class="right">150.00</td>
+          <td class="right item-total">150.00</td>
+        </tr>
+        <tr data-price="15.99">
+          <td style="color: orange;">Orange</td>
+          <td class="center">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+              <input type="number" class="qty-input" value="2" min="0" onchange="calculateTotals()">
+              <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+            </div>
+          </td>
+          <td class="right">15.99</td>
+          <td class="right item-total">31.98</td>
+        </tr>
+        <tr data-price="75.00">
+          <td style="color: #FFC000;">Mango</td>
+          <td class="center">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+              <input type="number" class="qty-input" value="1" min="0" onchange="calculateTotals()">
+              <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+            </div>
+          </td>
+          <td class="right">75.00</td>
+          <td class="right item-total">75.00</td>
+        </tr>
+        <tr data-price="49.95">
+          <td style="color: green;">waterMelon</td>
+          <td class="center">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+              <input type="number" class="qty-input" value="1" min="0" onchange="calculateTotals()">
+              <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+            </div>
+          </td>
+          <td class="right">49.95</td>
+          <td class="right item-total">49.95</td>
+        </tr>
+        <tr data-price="120.00">
+          <td style="color: rgb(255, 59, 59);">Strawberry</td>
+          <td class="center">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+              <input type="number" class="qty-input" value="5" min="0" onchange="calculateTotals()">
+              <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+            </div>
+          </td>
+          <td class="right">120.00</td>
+          <td class="right item-total">600.00</td>
+        </tr>
+         <tr data-price="60.00">
+          <td style="color: #FFC000;">Banana</td>
+          <td class="center">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+              <input type="number" class="qty-input" value="5" min="0" onchange="calculateTotals()">
+              <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+            </div>
+          </td>
+          <td class="right">60.00</td>
+          <td class="right item-total">300.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+   
+    <div class="summary-section">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotalAmount">906.93</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax (9%)</span>
+        <span id="taxAmount">72.55</span>
+      </div>
+      <div class="summary-row total-row">
+        <span>Total Amount Due</span>
+        <span id="totalDueAmount">979.48</span>
+      </div>
+    </div>
+
+    
+    <div class="footer">Thank you for your business!</div>
+
+    <!-- <div class="instructions">
+      <p><strong>Payment Instructions:</strong></p>
+      <p>Please make payments to Innovate Corp. via Wire Transfer or Online Portal.</p>
+      <p><em>Late payments are subject to a 1.5% monthly interest charge.</em></p>
+    </div>
+  </div> -->
+
+  <script>
+   
+    function updateQty(btn, change) {
+      const container = btn.parentElement;
+      const input = container.querySelector('.qty-input');
+      let currentVal = parseInt(input.value) || 0;
+      currentVal += change;
+      if (currentVal < 1) currentVal = 1;
+      input.value = currentVal;
+      calculateTotals();
+    }
+
+    
+    function calculateTotals() {
+      const rows = document.querySelectorAll('#itemsBody tr');
+      let subtotal = 0;
+
+      rows.forEach(row => {
+        const unitPrice = parseFloat(row.getAttribute('data-price'));
+        const qtyInput = row.querySelector('.qty-input');
+        const qty = parseInt(qtyInput.value) || 0;
+        
+        const lineTotal = unitPrice * qty;
+        subtotal += lineTotal;
+
+       
+        row.querySelector('.item-total').textContent = `${lineTotal.toFixed(2)}`;
+      });
+
+      const taxRate = 0.09;
+      const tax = subtotal * taxRate;
+      const totalDue = subtotal + tax;
+
+     
+      document.getElementById('subtotalAmount').textContent = `${subtotal.toFixed(2)}`;
+      document.getElementById('taxAmount').textContent = `${tax.toFixed(2)}`;
+      document.getElementById('totalDueAmount').textContent = `${totalDue.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
